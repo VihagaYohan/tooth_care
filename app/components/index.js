@@ -1,1 +1,1 @@
-export {default as AppText} from './app_text';
+export {default as UITextView} from './UITextView';
