@@ -1,7 +1,7 @@
 import {Date} from '../domain/enums/Enum';
 import IAppointment from '../domain/models/IAppointment';
 
-export const Appointments: IAppointment[] = [
+export const AppointmentDates: IAppointment[] = [
   {
     day: Date.Monday,
     startTime: '06.00 pm',

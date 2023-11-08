@@ -7,4 +7,5 @@ export default interface IPhysician extends IPerson {
   availability: boolean;
   telephone: string;
   changeAvailability(status: boolean): void;
+  changeAvailableDates(availableDates: IAppointment[]): void;
 }

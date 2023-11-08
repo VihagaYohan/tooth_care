@@ -30,3 +30,10 @@ export enum Treatment {
   Nerve_Filling = 'Nerve filling',
   Root_Canal_Therapy = 'Root canal therapy',
 }
+
+export enum CollectionTypes {
+  Patient = 'patient',
+  Physician = 'physician',
+  TreatmentTypes = 'treatmentTypes',
+  Appointments = 'appointments',
+}
