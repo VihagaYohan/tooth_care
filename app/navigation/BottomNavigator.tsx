@@ -8,7 +8,7 @@ import {Routes} from './index';
 import {ICONS} from '../constants';
 
 // screens
-import {AppointmnetsScreen} from '../screens';
+import {AppointmnetsScreen, PhysiciansScreen} from '../screens';
 
 const {EntypoIcons, FontistoIcon, MaterialCommunityIcon} = ICONS;
 
@@ -18,7 +18,10 @@ const Navigator = () => {
   return (
     <TAB.Navigator
       id="bottom_navigator"
-      initialRouteName={Routes.appointmnets.appointmentsList}>
+      initialRouteName={Routes.appointmnets.appointmentsList}
+      screenOptions={{
+        headerShown: false,
+      }}>
       <TAB.Screen
         name={Routes.appointmnets.appointmentsList}
         component={AppointmnetsScreen}
@@ -32,7 +35,7 @@ const Navigator = () => {
 
       <TAB.Screen
         name="doctors"
-        component={AppointmnetsScreen}
+        component={PhysiciansScreen}
         options={{
           title: 'Physicians',
           tabBarIcon: ({color, size}) => {
