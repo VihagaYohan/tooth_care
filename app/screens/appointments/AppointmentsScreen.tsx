@@ -8,7 +8,7 @@ import TreatmentType from '../../domain/entities/Treatment';
 import {Treatment} from '../../domain/enums/Enum';
 
 const AppointmnetsScreen = () => {
-  let store = new Store();
+  let store = new Store<TreatmentType>();
   store.addItemToCollection(new TreatmentType(Treatment.Cleaning, 2000));
   return (
     <SafeAreaView>

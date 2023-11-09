@@ -13,6 +13,7 @@ import {Patient, Physician, TreatmentType} from '../domain/entities';
 export default class Store<T> {
   private _treatmentTypesList: TreatmentType[] = TreatmentTypes;
   private _physiciansList: IPhysician[] = Physicians;
+  private _patientList: T[] = [];
 
   // add items to collection
   addItemToCollection(item: T) {
@@ -41,7 +42,7 @@ export default class Store<T> {
   getList(
     collection: CollectionTypes,
   ): TreatmentType[] | IPhysician[] | undefined {
-    if (collection === CollectionTypes.Patient) {
+    if (collection === CollectionTypes.Physician) {
       return this._physiciansList;
     } else if (collection === CollectionTypes.TreatmentTypes) {
       return this._treatmentTypesList;

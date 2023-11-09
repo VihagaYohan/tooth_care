@@ -1,0 +1,9 @@
+import EntypoIcons from 'react-native-vector-icons/Entypo';
+import FontistoIcon from 'react-native-vector-icons/Fontisto';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+export default {
+  EntypoIcons,
+  FontistoIcon,
+  MaterialCommunityIcon,
+};

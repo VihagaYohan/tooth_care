@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Dimensions} from 'react-native';
-import {normalizeSize} from '../utils/Helpers';
+import {normalizeSize} from '../utils/helpers';
 export default {
   PADDING: normalizeSize(20),
   PADDING_LEFT: normalizeSize(20),
