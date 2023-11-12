@@ -1,4 +1,5 @@
 const Routes = {
+  home: 'HOME',
   appointmnets: {
     appointmentsList: 'APPOINTMENT_LIST',
     appointmentDetails: 'APPOINTMENT_DETAILS',

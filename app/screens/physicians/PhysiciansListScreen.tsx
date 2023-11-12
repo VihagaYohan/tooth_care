@@ -6,6 +6,8 @@ import {
   ListRenderItem,
   TouchableOpacity,
 } from 'react-native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
 // components
 import {UIContainer, UITextView, UILoader} from '../../components';
@@ -18,10 +20,17 @@ import {getAllPhysicians} from '../../services/PhysicianService';
 
 // models
 import IPhysician from '../../domain/models/IPhysician';
+import {Routes} from '../../navigation';
 
 const {EntypoIcons} = ICONS;
 
-const PhysiciansListScreen = () => {
+const PhysiciansListScreen = ({
+  navigation,
+  route,
+}: {
+  navigation: StackNavigationProp<any, any>;
+  route: RouteProp<any, any>;
+}) => {
   const [data, setData] = useState<IPhysician[]>();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,7 +55,7 @@ const PhysiciansListScreen = () => {
 
   // navigate to physician details screen
   const navigateToDetails = (id: number) => {
-    console.log(`clicked: ${id}`);
+    navigation.navigate(Routes.physicians.physicianProfile);
   };
 
   // render UI
