@@ -13,11 +13,11 @@ export default class Person implements IPerson {
     this.age = age;
   }
 
-  getFullName() {
+  public getFullName() {
     return `${this.title}. ${this.firstName} ${this.lastName}`;
   }
 
-  getAge() {
+  public getAge() {
     return this.age;
   }
 }

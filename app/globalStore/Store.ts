@@ -39,13 +39,13 @@ export default class Store<T> {
   }
 
   // return items in collection
-  getList(
-    collection: CollectionTypes,
-  ): TreatmentType[] | IPhysician[] | undefined {
+  getList<T>(collection: CollectionTypes): T[] {
+    let result: T[] = [];
     if (collection === CollectionTypes.Physician) {
-      return this._physiciansList;
+      result = this._physiciansList;
     } else if (collection === CollectionTypes.TreatmentTypes) {
       return this._treatmentTypesList;
     }
+    return result;
   }
 }

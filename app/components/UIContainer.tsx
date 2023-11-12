@@ -24,7 +24,6 @@ const UIContainer = (props: propTypes) => {
         backgroundColor={COLORS.backgroundColor}
         barStyle="light-content"
       />
-
       <View style={{...styles.innerContainer, ...props.innerContainerStyle}}>
         {props.children}
       </View>
