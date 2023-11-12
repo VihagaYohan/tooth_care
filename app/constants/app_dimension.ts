@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Dimensions} from 'react-native';
 import {normalizeSize} from '../utils/helpers';
 
-const {width, height} = Dimensions.get('screen');
+const {width, height, fontScale} = Dimensions.get('screen');
 
 export default {
   PADDING: normalizeSize(20),
@@ -18,4 +18,5 @@ export default {
   CARD_BORDER_RADIUS: normalizeSize(10),
   SCREEN_WIDTH: width,
   SCREEN_HEIGHT: height,
+  FONT_SCALE: fontScale,
 };
