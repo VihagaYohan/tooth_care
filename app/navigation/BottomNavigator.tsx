@@ -8,7 +8,11 @@ import {Routes} from './index';
 import {ICONS} from '../constants';
 
 // screens
-import {AppointmnetsScreen, PhysiciansScreen} from '../screens';
+import {
+  AppointmnetsScreen,
+  PhysiciansScreen,
+  TreatmentTypesListScreen,
+} from '../screens';
 
 const {EntypoIcons, FontistoIcon, MaterialCommunityIcon} = ICONS;
 
@@ -46,7 +50,7 @@ const Navigator = () => {
 
       <TAB.Screen
         name="treatments"
-        component={AppointmnetsScreen}
+        component={TreatmentTypesListScreen}
         options={{
           title: 'Treatments',
           tabBarIcon: ({color, size}) => {

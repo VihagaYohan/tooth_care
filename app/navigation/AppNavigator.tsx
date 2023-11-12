@@ -2,7 +2,11 @@ import React, {Component} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 // screens
-import {PhysiciansDetailsScreen} from '../screens';
+import {
+  PhysiciansDetailsScreen,
+  TreatmentTypesListScreen,
+  NewTreatmentScreen,
+} from '../screens';
 
 // components
 import {UIHeader, UIHeaderBack} from '../components';
@@ -44,6 +48,24 @@ const AppNavigator = () => {
         component={PhysiciansDetailsScreen}
         options={{
           headerTitle: props => <UIHeader title="Physicians" {...props} />,
+        }}
+      />
+
+      <STACK.Screen
+        name={Routes.treatments.treatmentList}
+        component={TreatmentTypesListScreen}
+        options={{
+          headerTitle: props => <UIHeader title="Treatment Types" {...props} />,
+        }}
+      />
+
+      <STACK.Screen
+        name={Routes.treatments.newTreatment}
+        component={NewTreatmentScreen}
+        options={{
+          headerTitle: props => (
+            <UIHeader title="New Treatment Type" {...props} />
+          ),
         }}
       />
     </STACK.Navigator>

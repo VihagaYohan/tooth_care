@@ -14,6 +14,7 @@ const Routes = {
   },
   treatments: {
     treatmentList: 'TREATMENT_LIST',
+    newTreatment: 'NEW_TREATMENT_TYPE',
   },
   payments: {
     paymentList: 'PAYMENT_LIST',

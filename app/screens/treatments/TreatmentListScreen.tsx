@@ -1,8 +1,8 @@
 import React, {Component, useState, useEffect} from 'react';
 import {
   StyleSheet,
-  View,
   FlatList,
+  View,
   ListRenderItem,
   TouchableOpacity,
 } from 'react-native';
@@ -10,66 +10,61 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
 // components
-import {UIContainer, UITextView, UILoader} from '../../components';
+import {UIContainer, UITextView} from '../../components';
 
 // constants
-import {STYLES, ICONS, DIMENSION} from '../../constants';
-
-// services
-import {getAllPhysicians} from '../../services/PhysicianService';
+import {DIMENSION, ICONS, STYLES} from '../../constants';
 
 // models
-import IPhysician from '../../domain/models/IPhysician';
-import {Patients} from '../../data/patients';
+import {TreatmentType} from '../../domain/entities';
 
 // navigation
 import {Routes} from '../../navigation';
 
+// services
+import {getAllTreatmentTypes} from '../../services/TreatmentTypesService';
+
 const {EntypoIcons} = ICONS;
 
-const PhysiciansListScreen = ({
+const TreatmentsListScreen = ({
   navigation,
   route,
 }: {
   navigation: StackNavigationProp<any, any>;
   route: RouteProp<any, any>;
 }) => {
-  const [data, setData] = useState<IPhysician[]>();
+  const [data, setData] = useState<TreatmentType[]>();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    fetchAllPhysicians();
-  }, []);
-
-  // fetch all physicians
-  const fetchAllPhysicians = async () => {
+  // fetch all treatment types
+  const fetchAllTreatmentTypes = async () => {
     try {
-      let result = await getAllPhysicians();
+      let result = await getAllTreatmentTypes();
       if (result !== undefined) {
         setData(result);
       }
     } catch (error) {
-      setError('Unable to retrive data');
+      setError('Unable to fetch treatment types');
     } finally {
       setLoading(false);
     }
   };
 
-  // navigate to physician details screen
-  const navigateToDetails = (id: number) => {
-    navigation.navigate(Routes.physicians.physicianProfile);
+  // navigate to new treatment type screen
+  const navigateToDetails = () => {
+    navigation.navigate(Routes.treatments.newTreatment);
   };
 
   // render UI
-  const RenderItem: ListRenderItem<IPhysician> = ({item, index}) => {
+  const RenderItem: ListRenderItem<TreatmentType> = ({item, index}) => {
     return (
       <TouchableOpacity
         style={styles.itemContainer}
-        onPress={() => navigateToDetails(item.doctorId)}>
+        onPress={() => navigateToDetails()}>
         <View style={{flexDirection: 'row'}}>
           <UITextView text={`${index + 1}. `} textStyle={STYLES.body1} />
-          <UITextView text={`${item.getFullName()}`} textStyle={STYLES.body1} />
+          <UITextView text={`${item.type}`} textStyle={STYLES.body1} />
         </View>
 
         <EntypoIcons name="chevron-right" size={20} />
@@ -83,7 +78,7 @@ const PhysiciansListScreen = ({
         {data !== undefined && data.length > 0 && (
           <FlatList
             data={data}
-            keyExtractor={(item, index) => `physicians-list-${index}`}
+            keyExtractor={(item, index) => `treatments-list-${index}`}
             renderItem={({item, index}) => (
               <RenderItem
                 item={item}
@@ -119,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhysiciansListScreen;
+export default TreatmentsListScreen;
