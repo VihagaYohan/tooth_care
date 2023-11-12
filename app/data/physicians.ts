@@ -13,4 +13,14 @@ export const Physicians: IPhysician[] = [
     AppointmentDates,
     true,
   ),
+  new Physician(
+    2,
+    'Dr',
+    'Susan',
+    'Doe',
+    47,
+    '7499348783',
+    AppointmentDates,
+    true,
+  ),
 ];
