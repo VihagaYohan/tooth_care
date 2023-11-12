@@ -21,6 +21,7 @@ import {getAllPhysicians} from '../../services/PhysicianService';
 // models
 import IPhysician from '../../domain/models/IPhysician';
 import {Routes} from '../../navigation';
+import {Patients} from '../../data/patients';
 
 const {EntypoIcons} = ICONS;
 
@@ -37,6 +38,9 @@ const PhysiciansListScreen = ({
 
   useEffect(() => {
     fetchAllPhysicians();
+
+    console.log('patients goes here');
+    console.log(Patients);
   }, []);
 
   // fetch all physicians

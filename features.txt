@@ -1,0 +1,7 @@
+1. Make appointments for patients
+2. Update appointment details
+3. View appointment details filtered by date
+4. Search for an appointment using patient appointment ID
+5. Accept registration fee when placing appointment
+6. Calculate the total fee for the treatments after the appointments
+7. Accept payment and view an invoice of payment
