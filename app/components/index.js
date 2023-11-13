@@ -4,6 +4,7 @@ export {default as UILoader} from './UILoader';
 export {default as UIHeader} from './UIHeader';
 export {default as UIHeaderBack} from './UIHeaderBack';
 export {default as UIButton} from './UIButton';
+export {default as UIDropDownInput} from './UIDropDownInput';
 
 // buttons
 export {default as UITextButton} from './UITextButton';

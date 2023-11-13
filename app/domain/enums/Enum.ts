@@ -1,8 +1,3 @@
-export enum Gender {
-  Male,
-  Female,
-}
-
 export enum PaymentMethod {
   Cash,
   CardPayment,
@@ -43,4 +38,9 @@ export enum AppointmentStatus {
   Confirmed = 'confirmed',
   Cancelled = 'cancelled',
   Completed = 'completed',
+}
+
+export enum Gender {
+  Male = 'Male',
+  Feamel = 'Feamel',
 }

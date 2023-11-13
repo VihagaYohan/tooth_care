@@ -2,7 +2,7 @@ import IPerson from './IPerson';
 import IAppointment from './IAppointment';
 
 export default interface IPhysician extends IPerson {
-  readonly doctorId: number;
+  readonly id: number;
   availableDates: IAppointment[];
   availability: boolean;
   telephone: string;

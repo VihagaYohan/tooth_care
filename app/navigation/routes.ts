@@ -12,6 +12,7 @@ const Routes = {
   patients: {
     patientList: 'PATIENT_LIST',
     patientProfile: 'PATIENT_PROFILE',
+    newPatient: 'NEW_PATIENT',
   },
   treatments: {
     treatmentList: 'TREATMENT_LIST',

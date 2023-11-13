@@ -2,7 +2,7 @@ import {Gender} from '../enums/Enum';
 import IPerson from './IPerson';
 
 export default interface IPatient extends IPerson {
-  readonly appointmentId: number;
+  readonly id: number;
   address: string;
   gender: Gender;
   telephone: string;

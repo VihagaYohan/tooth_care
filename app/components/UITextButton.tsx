@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, TextStyle} from 'react-native';
 
 // components
 import {UITextView} from './';
 
 // constants
 import {COLORS, DIMENSION} from '../constants';
+
+// utils
 import {normalizeSize} from '../utils/helpers';
 
 interface propTypes {
   label: string;
   onClick: () => void;
+  textStyle?: any;
 }
 
 const UITextButton = (props: propTypes) => {
@@ -18,7 +21,13 @@ const UITextButton = (props: propTypes) => {
     <TouchableOpacity
       onPress={() => props.onClick()}
       style={styles.buttonContainer}>
-      <UITextView text={props.label} textStyle={styles.labelStyle} />
+      <UITextView
+        text={props.label}
+        textStyle={{
+          ...styles.labelStyle,
+          ...props?.textStyle,
+        }}
+      />
     </TouchableOpacity>
   );
 };
