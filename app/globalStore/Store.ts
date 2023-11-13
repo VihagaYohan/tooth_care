@@ -6,14 +6,18 @@ import {CollectionTypes} from '../domain/enums/Enum';
 // pre-defined data
 import {Treatments as TreatmentTypes} from '../data/treatments';
 import {Physicians} from '../data/physicians';
+import {Patients} from '../data/patients';
+import Appointments from '../data/appointments';
 
 // models
-import {Patient, Physician, TreatmentType} from '../domain/entities';
+import {Patient, Physician, TreatmentType, app} from '../domain/entities';
+import Appointment from '../domain/entities/Appointments';
 
 export default class Store<T> {
   private _treatmentTypesList: TreatmentType[] = TreatmentTypes;
   private _physiciansList: IPhysician[] = Physicians;
-  private _patientList: T[] = [];
+  private _patientList: Patient[] = Patients;
+  private _appointmentsList: Appointment[] = Appointments;
 
   // add items to collection
   addItemToCollection(item: T) {
@@ -40,11 +44,15 @@ export default class Store<T> {
 
   // return items in collection
   getList<T>(collection: CollectionTypes): T[] {
-    let result: T[] = [];
+    let result: any[] = [];
     if (collection === CollectionTypes.Physician) {
       result = this._physiciansList;
     } else if (collection === CollectionTypes.TreatmentTypes) {
-      return this._treatmentTypesList;
+      result = this._treatmentTypesList;
+    } else if (collection === CollectionTypes.Patient) {
+      result = this._patientList;
+    } else if (collection === CollectionTypes.Appointments) {
+      result = this._appointmentsList;
     }
     return result;
   }

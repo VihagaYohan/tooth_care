@@ -1,24 +1,31 @@
 import React, {Component} from 'react';
-import {StyleSheet, TextInput, View, TextStyle} from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  TextStyle,
+  TextInputProps,
+} from 'react-native';
 
 // constants
 import {COLORS, DIMENSION} from '../constants';
 
-interface propTypes {
+interface propTypes extends TextInputProps {
   placeholder?: string;
   textInputStyles?: TextStyle | TextStyle[];
 }
 
-const UITextInput = ({placeholder, textInputStyles, ...props}: propTypes) => {
+const UITextInput = (props: propTypes) => {
   return (
     <View style={[styles.container]}>
       <TextInput
         placeholder={
-          placeholder != undefined && placeholder.length > 0
-            ? placeholder
+          props.placeholder != undefined && props.placeholder.length > 0
+            ? props.placeholder
             : 'Type something here'
         }
-        style={[styles.textInput, textInputStyles]}
+        style={[styles.textInput, props.textInputStyles]}
+        {...props}
       />
     </View>
   );

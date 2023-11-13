@@ -1,13 +1,14 @@
-import {TreatmentType} from '../entities';
-import {Date} from '../enums/Enum';
+import {Patient, Physician, TreatmentType} from '../entities';
+import {AppointmentStatus, Date} from '../enums/Enum';
 
 export default interface IAppointment {
   appointmentId: number;
-  patientId: number;
-  doctorId: number;
+  patientId: Patient;
+  doctorId: Physician;
   appointmentDate: string;
   startTime: string;
   endTime: string;
   appointmentFee: number;
-  treatmentType: TreatmentType;
+  treatmentType: TreatmentType[];
+  status: AppointmentStatus;
 }

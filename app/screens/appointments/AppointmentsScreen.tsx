@@ -1,23 +1,136 @@
-import React, {Component} from 'react';
-import {StyleSheet, SafeAreaView, View, Text} from 'react-native';
-import FontawesomeIcon from 'react-native-vector-icons/FontAwesome';
+import React, {Component, useState, useEffect} from 'react';
+import {StyleSheet, View, ScrollView} from 'react-native';
+import {Table, Row, Rows, TableWrapper} from 'react-native-table-component';
+import moment from 'moment';
 
-// global store
-import Store from '../../globalStore/Store';
-import TreatmentType from '../../domain/entities/Treatment';
-import {Treatment} from '../../domain/enums/Enum';
+// components
+import {
+  UIContainer,
+  UITextView,
+  UITextInput,
+  UIButton,
+  UITextButton,
+  UIIconButton,
+  UIFloatingActionButton,
+} from '../../components';
+
+// constants
+import {ICONS, COLORS} from '../../constants';
+
+// services
+import {getAllAppointments} from '../../services/AppointmentService';
+import Appointment from '../../domain/entities/Appointments';
+
+const {AntDesignIcon} = ICONS;
 
 const AppointmnetsScreen = () => {
-  let store = new Store<TreatmentType>();
-  store.addItemToCollection(new TreatmentType(Treatment.Cleaning, 2000));
+  const [tableHead, setTableHead] = useState<string[]>([
+    'ID',
+    'Date',
+    'Patient Name',
+    'Physician Name',
+    'Status',
+  ]);
+  const [tableData, setTableData] = useState([]);
+
+  // column widths
+  const widthArr = [40, 100, 80, 100, 120];
+
+  useEffect(() => {
+    fetchAllAppointments();
+  }, []);
+
+  // fetch all appointments
+  const fetchAllAppointments = async () => {
+    let result = await getAllAppointments();
+    if (result != undefined) {
+      console.log(result);
+      let parent: any = [];
+
+      result.forEach(element => {
+        let item = [];
+        item.push(element.appointmentId);
+        item.push(moment(element.appointmentDate).format('DD MMM YYYY'));
+        item.push(element.patientId.getFullName());
+        item.push(element.doctorId.getFullName());
+        item.push(element.status.toUpperCase());
+
+        parent.push(item);
+      });
+
+      setTableData(parent);
+    }
+  };
+
   return (
-    <SafeAreaView>
-      <Text>Appointments</Text>
-      <FontawesomeIcon name="rocket" size={30} color="red" />
-    </SafeAreaView>
+    <UIContainer>
+      <View style={{flex: 1}}>
+        <View style={styles.searchContainer}>
+          <UITextInput
+            placeholder="Enter appointment ID"
+            placeholderTextColor={COLORS.white}
+          />
+
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <UITextButton
+              label="Search"
+              onClick={() => console.log('Button clicked')}
+            />
+
+            <UIIconButton onClick={() => console.log('filter clicked')}>
+              <AntDesignIcon
+                name="filter"
+                size={25}
+                color={COLORS.primaryColor}
+              />
+            </UIIconButton>
+          </View>
+        </View>
+
+        <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+          <Row
+            data={tableHead}
+            widthArr={widthArr}
+            style={styles.head}
+            textStyle={styles.text}
+          />
+        </Table>
+
+        <ScrollView style={styles.dataWrapper}>
+          <ScrollView horizontal={true}>
+            <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
+              {tableData.map((rowData, index) => (
+                <Row
+                  key={index}
+                  data={rowData}
+                  widthArr={widthArr}
+                  style={[styles.row]}
+                  textStyle={styles.text}
+                />
+              ))}
+            </Table>
+          </ScrollView>
+        </ScrollView>
+
+        <UIFloatingActionButton
+          icon={<AntDesignIcon name="plus" size={25} color={COLORS.white} />}
+          onClick={() => console.log('add clicked')}
+        />
+      </View>
+    </UIContainer>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  searchContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  head: {height: 60, backgroundColor: '#f1f8ff'},
+  text: {margin: 6},
+  dataWrapper: {},
+  row: {height: 60, backgroundColor: '#E7E6E1'},
+});
 
 export default AppointmnetsScreen;

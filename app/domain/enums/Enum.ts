@@ -37,3 +37,10 @@ export enum CollectionTypes {
   TreatmentTypes = 'treatmentTypes',
   Appointments = 'appointments',
 }
+
+export enum AppointmentStatus {
+  Pending = 'pending',
+  Confirmed = 'confirmed',
+  Cancelled = 'cancelled',
+  Completed = 'completed',
+}
