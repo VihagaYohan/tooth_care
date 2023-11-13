@@ -2,6 +2,8 @@ import React, {Component, useState, useEffect} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
 import {Table, Row, Rows, TableWrapper} from 'react-native-table-component';
 import moment from 'moment';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
 // components
 import {
@@ -21,9 +23,18 @@ import {ICONS, COLORS} from '../../constants';
 import {getAllAppointments} from '../../services/AppointmentService';
 import Appointment from '../../domain/entities/Appointments';
 
+// navigation
+import {Routes} from '../../navigation';
+
 const {AntDesignIcon} = ICONS;
 
-const AppointmnetsScreen = () => {
+const AppointmnetsScreen = ({
+  navigation,
+  route,
+}: {
+  navigation: StackNavigationProp<any, any>;
+  route: RouteProp<any, any>;
+}) => {
   const [tableHead, setTableHead] = useState<string[]>([
     'ID',
     'Date',
@@ -114,7 +125,9 @@ const AppointmnetsScreen = () => {
 
         <UIFloatingActionButton
           icon={<AntDesignIcon name="plus" size={25} color={COLORS.white} />}
-          onClick={() => console.log('add clicked')}
+          onClick={() =>
+            navigation.navigate(Routes.appointmnets.newAppointment)
+          }
         />
       </View>
     </UIContainer>

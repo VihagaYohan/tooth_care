@@ -6,6 +6,7 @@ import {
   PhysiciansDetailsScreen,
   TreatmentTypesListScreen,
   NewTreatmentScreen,
+  NewAppointmentScreen,
 } from '../screens';
 
 // components
@@ -66,6 +67,14 @@ const AppNavigator = () => {
           headerTitle: props => (
             <UIHeader title="New Treatment Type" {...props} />
           ),
+        }}
+      />
+
+      <STACK.Screen
+        name={Routes.appointmnets.newAppointment}
+        component={NewAppointmentScreen}
+        options={{
+          headerTitle: props => <UIHeader title="New Appointment" {...props} />,
         }}
       />
     </STACK.Navigator>

@@ -1,5 +1,6 @@
 // appointments
 export {default as AppointmnetsScreen} from './appointments/AppointmentsScreen';
+export {default as NewAppointmentScreen} from './appointments/NewAppointments';
 
 // physicians
 export {default as PhysiciansScreen} from './physicians/PhysiciansListScreen';

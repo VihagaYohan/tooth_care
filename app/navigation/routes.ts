@@ -2,6 +2,7 @@ const Routes = {
   home: 'HOME',
   appointmnets: {
     appointmentsList: 'APPOINTMENT_LIST',
+    newAppointment: 'NEW_APPOINTMENT',
     appointmentDetails: 'APPOINTMENT_DETAILS',
   },
   physicians: {
