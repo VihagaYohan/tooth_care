@@ -8,8 +8,8 @@ import IAppointmentDates from '../models/IAppointmentDates';
 export default class Appointment implements IAppointment {
   constructor(
     public readonly appointmentId: number,
-    public patientId: Patient,
-    public doctorId: Physician,
+    public patient: Patient,
+    public doctor: Physician,
     public appointmentDate: IAppointmentDates,
     public appointmentFee: number,
     public treatmentType: TreatmentType[],

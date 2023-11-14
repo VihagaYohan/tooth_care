@@ -4,8 +4,8 @@ import IAppointmentDates from './IAppointmentDates';
 
 export default interface IAppointment {
   appointmentId: number;
-  patientId: Patient;
-  doctorId: Physician;
+  patient: Patient;
+  doctor: Physician;
   appointmentDate: IAppointmentDates;
   appointmentFee: number;
   treatmentType: TreatmentType[];

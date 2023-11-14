@@ -62,8 +62,8 @@ const AppointmnetsScreen = ({
         let item = [];
         item.push(element.appointmentId);
         item.push(moment(element.appointmentDate).format('DD MMM YYYY'));
-        item.push(element.patientId.getFullName());
-        item.push(element.doctorId.getFullName());
+        item.push(element.patient.getFullName());
+        item.push(element.doctor.getFullName());
         item.push(element.status.toUpperCase());
 
         parent.push(item);
