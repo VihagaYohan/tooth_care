@@ -198,7 +198,7 @@ const NewAppointmentScreen = ({
             onValueChange={newValue => isPay(newValue)}
           />
           <UITextView
-            text={'Paid appointment fee'}
+            text={'Paid appointment fee Rs. 1000.00'}
             textStyle={styles.appointmentFeeText}
           />
         </View>

@@ -25,6 +25,7 @@ import Appointment from '../../domain/entities/Appointments';
 
 // navigation
 import {Routes} from '../../navigation';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const {AntDesignIcon} = ICONS;
 
@@ -41,11 +42,12 @@ const AppointmnetsScreen = ({
     'Patient Name',
     'Physician Name',
     'Status',
+    'Actions',
   ]);
   const [tableData, setTableData] = useState([]);
 
   // column widths
-  const widthArr = [40, 100, 80, 100, 120];
+  const widthArr = [40, 100, 80, 100, 120, 100];
 
   useEffect(() => {
     fetchAllAppointments();
@@ -65,7 +67,16 @@ const AppointmnetsScreen = ({
         item.push(element.patient.getFullName());
         item.push(element.doctor.getFullName());
         item.push(element.status.toUpperCase());
-
+        item.push(
+          <TouchableOpacity
+            style={{
+              paddingVertical: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <UITextView text="View" textStyle={{color: COLORS.blue.blue800}} />
+          </TouchableOpacity>,
+        );
         parent.push(item);
       });
 
@@ -108,7 +119,7 @@ const AppointmnetsScreen = ({
         </Table>
 
         <ScrollView style={styles.dataWrapper}>
-          <ScrollView horizontal={true}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
               {tableData.map((rowData, index) => (
                 <Row
