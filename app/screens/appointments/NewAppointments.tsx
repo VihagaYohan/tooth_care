@@ -4,6 +4,8 @@ import {Dropdown} from 'react-native-element-dropdown';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 
 // components
 import {
@@ -30,6 +32,9 @@ import {normalizeSize, showAlert} from '../../utils/helpers';
 
 // models
 import Appointment from '../../domain/entities/Appointments';
+import {Patient} from '../../domain/entities';
+import IPhysician from '../../domain/models/IPhysician';
+import AppointmentDates from '../../domain/entities/AppointmentDates';
 
 const NewAppointmentScreen = ({
   navigation,
@@ -42,8 +47,18 @@ const NewAppointmentScreen = ({
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [pay, isPay] = useState<boolean>(true); // appointment fee
+  const [doctor, setDoctor] = useState<IPhysician>();
+  const [patient, setPatient] = useState<Patient>();
+  const [appointmentDate, setAppointmentDate] = useState<AppointmentDates>();
+  const [status, setStatus] = useState();
 
-  let appointmentData: Appointment;
+  let appointmentData: Appointment | any = {
+    doctor: null,
+    patient: null,
+    appointmentDate: null,
+    appointmentFee: 0,
+    status: false,
+  };
 
   // data source
   const physicians = Physicians;
@@ -53,7 +68,14 @@ const NewAppointmentScreen = ({
 
   // handle save appointment
   const handleSaveAppointment = () => {
-    let validation = handleValidation();
+    let validate = handleValidation();
+    if (validate) {
+      appointmentData['doctor'] = doctor;
+      appointmentData['patient'] = patient;
+      appointmentData['appointmentDate'] = appointmentDate;
+      appointmentData['appointmentFee'] = 1000;
+      appointmentData['status'] = status;
+    }
   };
 
   // handle validation
@@ -94,9 +116,9 @@ const NewAppointmentScreen = ({
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            console.log(item);
-            setValue(item.value);
+          onChange={(item: any) => {
+            delete item._index;
+            setDoctor(item);
             setIsFocus(false);
           }}
         />
@@ -120,9 +142,9 @@ const NewAppointmentScreen = ({
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            console.log(item);
-            setValue(item.value);
+          onChange={(item: any) => {
+            delete item._index;
+            setPatient(item);
             setIsFocus(false);
           }}
         />
@@ -158,9 +180,10 @@ const NewAppointmentScreen = ({
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            console.log(item);
-            setValue(item.value);
+          onChange={(item: any) => {
+            delete item._index;
+            setAppointmentDate(item);
+            // setValue(item.value);
             setIsFocus(false);
           }}
         />
@@ -184,9 +207,9 @@ const NewAppointmentScreen = ({
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            console.log(item);
-            setValue(item.value);
+          onChange={(item: any) => {
+            delete item._index;
+            setStatus(item);
             setIsFocus(false);
           }}
         />
