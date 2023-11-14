@@ -7,6 +7,7 @@ import {
   TreatmentTypesListScreen,
   NewTreatmentScreen,
   NewAppointmentScreen,
+  AppointmentDetailsScreen,
   NewPatient,
 } from '../screens';
 
@@ -44,7 +45,7 @@ const AppNavigator = () => {
           headerShown: false,
         }}
       />
-
+      {/* patients */}
       <STACK.Screen
         name={Routes.patients.newPatient}
         component={NewPatient}
@@ -52,7 +53,7 @@ const AppNavigator = () => {
           headerTitle: props => <UIHeader title="New Patient" {...props} />,
         }}
       />
-
+      {/* physicians */}
       <STACK.Screen
         name={Routes.physicians.physicianProfile}
         component={PhysiciansDetailsScreen}
@@ -60,7 +61,7 @@ const AppNavigator = () => {
           headerTitle: props => <UIHeader title="Physicians" {...props} />,
         }}
       />
-
+      {/* treatment types */}
       <STACK.Screen
         name={Routes.treatments.treatmentList}
         component={TreatmentTypesListScreen}
@@ -68,7 +69,6 @@ const AppNavigator = () => {
           headerTitle: props => <UIHeader title="Treatment Types" {...props} />,
         }}
       />
-
       <STACK.Screen
         name={Routes.treatments.newTreatment}
         component={NewTreatmentScreen}
@@ -78,12 +78,21 @@ const AppNavigator = () => {
           ),
         }}
       />
-
+      {/* appointments */}
       <STACK.Screen
         name={Routes.appointmnets.newAppointment}
         component={NewAppointmentScreen}
         options={{
           headerTitle: props => <UIHeader title="New Appointment" {...props} />,
+        }}
+      />
+      <STACK.Screen
+        name={Routes.appointmnets.appointmentDetails}
+        component={AppointmentDetailsScreen}
+        options={{
+          headerTitle: props => (
+            <UIHeader title="Update Appointment" {...props} />
+          ),
         }}
       />
     </STACK.Navigator>
