@@ -1,6 +1,8 @@
 import React, {Component, useState, useEffect} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 
 // components
 import {UIContainer, UITextInput, UITextView, UIButton} from '../../components';
@@ -11,12 +13,25 @@ import {COLORS, STYLES} from '../../constants';
 // pre-defined data
 import Genders from '../../data/gender';
 
-// save
+// services
 import {addNewPatient, getAllPatients} from '../../services/PatientService';
+
+// models
 import {Patient} from '../../domain/entities';
+
+// utils
 import {showAlert} from '../../utils/helpers';
 
-const NewPatient = () => {
+// navigation
+import {Routes} from '../../navigation';
+
+const NewPatient = ({
+  navigation,
+  route,
+}: {
+  navigation: StackNavigationProp<any, any>;
+  route: RouteProp<any, any>;
+}) => {
   const [isFocus, setIsFocus] = useState(false);
   const [value, setValue] = useState(null);
   const [firstName, setFirstName] = useState<string>();
@@ -32,7 +47,7 @@ const NewPatient = () => {
   const handleSave = () => {
     let validate = handleValidation();
     if (!validate) {
-      let result = addNewPatient(
+      addNewPatient(
         new Patient(
           list.length + 1,
           'Mr',
@@ -47,6 +62,8 @@ const NewPatient = () => {
           undefined,
         ),
       );
+      showAlert('New patient has been added');
+      navigation.navigate(Routes.appointmnets.newAppointment);
     }
   };
 
