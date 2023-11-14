@@ -9,10 +9,21 @@ export const getAllAppointments = () => {
 };
 
 // add new appointment
-export const addAppointment = (item: Appointment) => {
+export const addAppointment = (newItem: Appointment): boolean => {
   let store = new Store<Appointment>();
-  store.addItemToCollection(item);
+  // check if doctor already have an appointment for selected time slot
+  let allAppointments = store.getList(CollectionTypes.Appointments);
+  let exsitingAppointment = allAppointments.filter((item: any, index) => {
+    return (
+      item.doctor.id === newItem.doctor.id &&
+      item.appointmentDate.startTime === newItem.appointmentDate.startTime
+    );
+  });
 
-  let result = store.getList<Appointment>(CollectionTypes.Appointments);
-  console.log(result.length);
+  if (exsitingAppointment.length > 0) {
+    store.addItemToCollection(newItem);
+    return true;
+  } else {
+    return false;
+  }
 };

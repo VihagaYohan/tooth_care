@@ -21,12 +21,6 @@ export default class Store<T> {
 
   // add items to collection
   addItemToCollection(item: T) {
-    /* console.log(item);
-    if (item instanceof Appointment) {
-      this._appointmentsList.push(item);
-    } else {
-      console.log('else');
-    } */
     if (item instanceof TreatmentType) {
       console.log('treatment');
       this._treatmentTypesList.push(item);

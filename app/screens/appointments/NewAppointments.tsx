@@ -94,10 +94,13 @@ const NewAppointmentScreen = ({
         null,
         status,
       );
-      addAppointment(appointment);
-
-      showAlert('New appointment has been added');
-      navigation.navigate(Routes.appointmnets.appointmentsList);
+      let result = addAppointment(appointment);
+      if (result) {
+        showAlert('New appointment has been added');
+        navigation.navigate(Routes.appointmnets.appointmentsList);
+      } else {
+        showAlert('Please select a different time slot');
+      }
     }
   };
 
