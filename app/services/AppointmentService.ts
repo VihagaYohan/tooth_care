@@ -7,3 +7,12 @@ export const getAllAppointments = () => {
   let store = new Store<Appointment>();
   return store.getList<Appointment>(CollectionTypes.Appointments);
 };
+
+// add new appointment
+export const addAppointment = (item: Appointment) => {
+  let store = new Store<Appointment>();
+  store.addItemToCollection(item);
+
+  let result = store.getList<Appointment>(CollectionTypes.Appointments);
+  console.log(result.length);
+};

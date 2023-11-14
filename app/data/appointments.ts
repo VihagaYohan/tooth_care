@@ -6,7 +6,7 @@ import {Physicians} from './physicians';
 import {Treatments} from './treatments';
 
 const Appointments: Appointment[] = [
-  new Appointment(
+  /* new Appointment(
     1,
     Patients[0],
     Physicians[0],
@@ -14,7 +14,7 @@ const Appointments: Appointment[] = [
     1000,
     [Treatments[0], Treatments[1]],
     AppointmentStatus.Confirmed,
-  ),
+  ), */
 ];
 
 export default Appointments;

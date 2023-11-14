@@ -50,23 +50,29 @@ const AppointmnetsScreen = ({
   const widthArr = [40, 100, 80, 100, 120, 100];
 
   useEffect(() => {
+    navigation.addListener('focus', () => {
+      fetchAllAppointments();
+    });
+  }, [navigation]);
+
+  useEffect(() => {
     fetchAllAppointments();
   }, []);
 
   // fetch all appointments
-  const fetchAllAppointments = async () => {
-    let result = await getAllAppointments();
+  const fetchAllAppointments = () => {
+    let result = getAllAppointments();
     if (result != undefined) {
-      console.log(result);
       let parent: any = [];
 
-      result.forEach(element => {
+      result.forEach((element: Appointment) => {
         let item = [];
+        let appointmentStatus: any = element.status;
         item.push(element.appointmentId);
         item.push(moment(element.appointmentDate).format('DD MMM YYYY'));
         item.push(element.patient.getFullName());
         item.push(element.doctor.getFullName());
-        item.push(element.status.toUpperCase());
+        item.push(appointmentStatus.status.toUpperCase());
         item.push(
           <TouchableOpacity
             style={{

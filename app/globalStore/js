@@ -1,0 +1,76 @@
+{
+  "appointmentDate": {
+    "appointmentDate": {
+      "day": 1,
+      "endTime": "06.30 pm",
+      "id": 1,
+      "startTime": "06.00 pm",
+      "title": "1 - 06.00 pm - 06.30 pm"
+    },
+    "appointmentFee": 1000,
+    "appointmentId": 1,
+    "doctor": {
+      "age": 56,
+      "availability": undefined,
+      "availableDates": true,
+      "firstName": "John",
+      "fullName": "Dr. John Doe",
+      "gender": "930399282",
+      "id": 1,
+      "lastName": "Doe",
+      "telephone": undefined,
+      "title": "Dr"
+    },
+    "patient": {
+      "address": "Male",
+      "age": 23,
+      "amount": undefined,
+      "firstName": "Peter",
+      "fullName": "Mr. Peter Stewart",
+      "gender": "address sample 1",
+      "id": 1,
+      "lastName": "Stewart",
+      "physicianId": 1,
+      "telephone": "0987654321",
+      "title": "Mr",
+      "treatmentId": 1
+    },
+    "status": {
+      "id": 1,
+      "status": "pending"
+    }
+  },
+  "appointmentFee": 1000,
+  "appointmentId": 1,
+  "doctor": {
+    "age": 56,
+    "availability": undefined,
+    "availableDates": true,
+    "firstName": "John",
+    "fullName": "Dr. John Doe",
+    "gender": "930399282",
+    "id": 1,
+    "lastName": "Doe",
+    "telephone": undefined,
+    "title": "Dr"
+  },
+  "patient": {
+    "address": "Male",
+    "age": 23,
+    "amount": undefined,
+    "firstName": "Peter",
+    "fullName": "Mr. Peter Stewart",
+    "gender": "address sample 1",
+    "id": 1,
+    "lastName": "Stewart",
+    "physicianId": 1,
+    "telephone": "0987654321",
+    "title": "Mr",
+    "treatmentId": 1
+  },
+  "status": {
+    "id": 1,
+    "status": "pending"
+  },
+  "treatmentType": null
+}

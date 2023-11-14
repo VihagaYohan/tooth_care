@@ -36,6 +36,12 @@ import {Patient} from '../../domain/entities';
 import IPhysician from '../../domain/models/IPhysician';
 import AppointmentDates from '../../domain/entities/AppointmentDates';
 
+// services
+import {
+  addAppointment,
+  getAllAppointments,
+} from '../../services/AppointmentService';
+
 const NewAppointmentScreen = ({
   navigation,
   route,
@@ -51,6 +57,8 @@ const NewAppointmentScreen = ({
   const [patient, setPatient] = useState<Patient>();
   const [appointmentDate, setAppointmentDate] = useState<AppointmentDates>();
   const [status, setStatus] = useState();
+
+  let list = getAllAppointments();
 
   let appointmentData: Appointment | any = {
     doctor: null,
@@ -70,11 +78,26 @@ const NewAppointmentScreen = ({
   const handleSaveAppointment = () => {
     let validate = handleValidation();
     if (validate) {
+      appointmentData['appointmentId'] = list.length + 1;
       appointmentData['doctor'] = doctor;
       appointmentData['patient'] = patient;
       appointmentData['appointmentDate'] = appointmentDate;
       appointmentData['appointmentFee'] = 1000;
       appointmentData['status'] = status;
+
+      let appointment = new Appointment(
+        list.length + 1,
+        patient,
+        doctor,
+        appointmentDate,
+        1000,
+        null,
+        status,
+      );
+      addAppointment(appointment);
+
+      showAlert('New appointment has been added');
+      navigation.navigate(Routes.appointmnets.appointmentsList);
     }
   };
 
