@@ -15,6 +15,10 @@ import {Physicians} from '../../data/physicians';
 
 // navigation
 import {Routes} from '../../navigation';
+import {Patients} from '../../data/patients';
+import {AppointmentSlots} from '../../data/appointment_dates';
+import {Treatments} from '../../data/treatments';
+import AppointmentStatusList from '../../data/appointment_status';
 
 const NewAppointmentScreen = ({
   navigation,
@@ -25,7 +29,11 @@ const NewAppointmentScreen = ({
 }) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const data = Physicians;
+  const physicians = Physicians;
+  const patients = Patients;
+  const slots = AppointmentSlots;
+  const treatments = Treatments;
+  const statusList = AppointmentStatusList;
 
   return (
     <UIContainer>
@@ -35,7 +43,7 @@ const NewAppointmentScreen = ({
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
-        data={data}
+        data={physicians}
         search
         maxHeight={300}
         labelField="fullName"
@@ -58,7 +66,7 @@ const NewAppointmentScreen = ({
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
-        data={data}
+        data={patients}
         search
         maxHeight={300}
         labelField="fullName"
@@ -91,6 +99,75 @@ const NewAppointmentScreen = ({
           }}
         />
       </View>
+
+      <Dropdown
+        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={slots}
+        search
+        maxHeight={300}
+        labelField="startTime"
+        valueField="id"
+        placeholder={!isFocus ? 'Select a appointment time slot' : '...'}
+        searchPlaceholder="Search..."
+        value={value}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={item => {
+          console.log(item);
+          setValue(item.value);
+          setIsFocus(false);
+        }}
+      />
+
+      <Dropdown
+        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={treatments}
+        search
+        maxHeight={300}
+        labelField="type"
+        valueField="id"
+        placeholder={!isFocus ? 'Select a treatment type' : '...'}
+        searchPlaceholder="Search..."
+        value={value}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={item => {
+          console.log(item);
+          setValue(item.value);
+          setIsFocus(false);
+        }}
+      />
+
+      <Dropdown
+        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        inputSearchStyle={styles.inputSearchStyle}
+        iconStyle={styles.iconStyle}
+        data={statusList}
+        search
+        maxHeight={300}
+        labelField="status"
+        valueField="id"
+        placeholder={!isFocus ? 'Select a appointment status' : '...'}
+        searchPlaceholder="Search..."
+        value={value}
+        onFocus={() => setIsFocus(true)}
+        onBlur={() => setIsFocus(false)}
+        onChange={item => {
+          console.log(item);
+          setValue(item.value);
+          setIsFocus(false);
+        }}
+      />
     </UIContainer>
   );
 };

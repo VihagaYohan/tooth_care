@@ -4,18 +4,18 @@ import {Gender} from '../enums/Enum';
 
 export default class Patient extends Person implements IPatient {
   constructor(
-    public readonly appointmentId: number,
+    public readonly id: number,
     title: string,
     firstName: string,
     lastName: string,
     age: number,
+    gender: Gender,
     public address: string,
-    public gender: Gender,
     public telephone: string,
     public treatmentId?: number,
     public physicianId?: number,
     public amount?: number,
   ) {
-    super(title, firstName, lastName, age);
+    super(title, firstName, lastName, age, gender);
   }
 }
