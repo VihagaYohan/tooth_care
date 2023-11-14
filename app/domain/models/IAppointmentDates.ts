@@ -5,7 +5,7 @@ interface IAppointmentDates {
   day: Date;
   startTime: string;
   endTime: string;
-  title: string;
+  title?: string;
 }
 
 export default IAppointmentDates;

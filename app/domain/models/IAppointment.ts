@@ -8,6 +8,6 @@ export default interface IAppointment {
   doctor: Physician;
   appointmentDate: IAppointmentDates;
   appointmentFee: number;
-  treatmentType: TreatmentType[];
+  treatmentType?: TreatmentType[];
   status: AppointmentStatus;
 }

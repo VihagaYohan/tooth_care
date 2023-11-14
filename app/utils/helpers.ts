@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Dimensions, Platform, PixelRatio} from 'react-native';
+import {Dimensions, Platform, PixelRatio, Alert} from 'react-native';
 
 // print console logs, only in dev envionrment
 export const showConsole = (content: any) => {
@@ -19,7 +19,13 @@ export const normalizeSize = (fontSize: number) => {
   }
 };
 
+// show alert
+export const showAlert = (payload: string) => {
+  Alert.alert(payload);
+};
+
 export default {
   showConsole,
   normalizeSize,
+  showAlert,
 };

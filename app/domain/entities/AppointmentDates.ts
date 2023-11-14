@@ -7,7 +7,7 @@ class AppointmentDates implements IAppointmentDates {
     public day: Date,
     public startTime: string,
     public endTime: string,
-    public readonly title: string,
+    public readonly title?: string,
   ) {
     this.title = `${this.day} - ${this.startTime} - ${this.endTime}`;
   }

@@ -1,24 +1,35 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
+import CheckBox from '@react-native-community/checkbox';
 
 // components
-import {UIContainer, UITextView, UITextButton} from '../../components';
+import {
+  UIContainer,
+  UITextView,
+  UITextButton,
+  UIButton,
+} from '../../components';
 
 // constants
-import {STYLES} from '../../constants';
+import {COLORS, STYLES} from '../../constants';
 
 // pre-defined data
 import {Physicians} from '../../data/physicians';
+import {Patients} from '../../data/patients';
+import {AppointmentSlots} from '../../data/appointment_dates';
+import AppointmentStatusList from '../../data/appointment_status';
 
 // navigation
 import {Routes} from '../../navigation';
-import {Patients} from '../../data/patients';
-import {AppointmentSlots} from '../../data/appointment_dates';
-import {Treatments} from '../../data/treatments';
-import AppointmentStatusList from '../../data/appointment_status';
+
+// utils
+import {normalizeSize, showAlert} from '../../utils/helpers';
+
+// models
+import Appointment from '../../domain/entities/Appointments';
 
 const NewAppointmentScreen = ({
   navigation,
@@ -27,147 +38,177 @@ const NewAppointmentScreen = ({
   navigation: StackNavigationProp<any, any>;
   route: RouteProp<any, any>;
 }) => {
+  // states
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
+  const [pay, isPay] = useState<boolean>(true); // appointment fee
+
+  let appointmentData: Appointment;
+
+  // data source
   const physicians = Physicians;
   const patients = Patients;
   const slots = AppointmentSlots;
-  const treatments = Treatments;
   const statusList = AppointmentStatusList;
+
+  // handle save appointment
+  const handleSaveAppointment = () => {
+    let validation = handleValidation();
+  };
+
+  // handle validation
+  const handleValidation = (): boolean => {
+    if (
+      appointmentData === undefined ||
+      appointmentData.doctor === undefined ||
+      appointmentData.patient === undefined ||
+      appointmentData.appointmentDate === undefined ||
+      appointmentData.status === undefined
+    ) {
+      showAlert('Please check fields');
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <UIContainer>
-      <Dropdown
-        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={physicians}
-        search
-        maxHeight={300}
-        labelField="fullName"
-        valueField="id"
-        placeholder={!isFocus ? 'Select a doctor' : '...'}
-        searchPlaceholder="Search..."
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          console.log(item);
-          setValue(item.value);
-          setIsFocus(false);
-        }}
-      />
-
-      <Dropdown
-        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={patients}
-        search
-        maxHeight={300}
-        labelField="fullName"
-        valueField="id"
-        placeholder={!isFocus ? 'Select a patient' : '...'}
-        searchPlaceholder="Search..."
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          console.log(item);
-          setValue(item.value);
-          setIsFocus(false);
-        }}
-      />
-
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <UITextView text="or" textStyle={{fontSize: 16}} />
-        <UITextButton
-          label="Create a new patient"
-          onClick={() => navigation.navigate(Routes.patients.newPatient)}
-          textStyle={{
-            color: 'red',
-            fontSize: 16,
+      <ScrollView showsHorizontalScrollIndicator={false}>
+        <Dropdown
+          style={[
+            styles.dropdown,
+            isFocus && {borderColor: COLORS.blue.blue800},
+          ]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={physicians}
+          search
+          maxHeight={300}
+          labelField="fullName"
+          valueField="id"
+          placeholder={!isFocus ? 'Select a doctor' : '...'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            console.log(item);
+            setValue(item.value);
+            setIsFocus(false);
           }}
         />
-      </View>
 
-      <Dropdown
-        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={slots}
-        search
-        maxHeight={300}
-        labelField="startTime"
-        valueField="id"
-        placeholder={!isFocus ? 'Select a appointment time slot' : '...'}
-        searchPlaceholder="Search..."
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          console.log(item);
-          setValue(item.value);
-          setIsFocus(false);
-        }}
-      />
+        <Dropdown
+          style={[
+            styles.dropdown,
+            isFocus && {borderColor: COLORS.blue.blue800},
+          ]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={patients}
+          search
+          maxHeight={300}
+          labelField="fullName"
+          valueField="id"
+          placeholder={!isFocus ? 'Select a patient' : '...'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            console.log(item);
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
 
-      <Dropdown
-        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={treatments}
-        search
-        maxHeight={300}
-        labelField="type"
-        valueField="id"
-        placeholder={!isFocus ? 'Select a treatment type' : '...'}
-        searchPlaceholder="Search..."
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          console.log(item);
-          setValue(item.value);
-          setIsFocus(false);
-        }}
-      />
+        <View style={styles.textButtonContainer}>
+          <UITextView text="or" textStyle={{fontSize: 16}} />
+          <UITextButton
+            label="Create a new patient"
+            onClick={() => navigation.navigate(Routes.patients.newPatient)}
+            textStyle={{
+              color: COLORS.blue.blue800,
+              fontSize: 16,
+            }}
+          />
+        </View>
 
-      <Dropdown
-        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={statusList}
-        search
-        maxHeight={300}
-        labelField="status"
-        valueField="id"
-        placeholder={!isFocus ? 'Select a appointment status' : '...'}
-        searchPlaceholder="Search..."
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          console.log(item);
-          setValue(item.value);
-          setIsFocus(false);
-        }}
-      />
+        <Dropdown
+          style={[
+            styles.dropdown,
+            isFocus && {borderColor: COLORS.blue.blue100},
+          ]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={slots}
+          search
+          maxHeight={300}
+          labelField="startTime"
+          valueField="id"
+          placeholder={!isFocus ? 'Select a appointment time slot' : '...'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            console.log(item);
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
+
+        <Dropdown
+          style={[
+            styles.dropdown,
+            isFocus && {borderColor: COLORS.blue.blue800},
+          ]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={statusList}
+          search
+          maxHeight={300}
+          labelField="status"
+          valueField="id"
+          placeholder={!isFocus ? 'Select a appointment status' : '...'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            console.log(item);
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
+
+        <View style={styles.rowStyle}>
+          <CheckBox
+            disabled={false}
+            value={pay}
+            onValueChange={newValue => isPay(newValue)}
+          />
+          <UITextView
+            text={'Paid appointment fee'}
+            textStyle={styles.appointmentFeeText}
+          />
+        </View>
+
+        <UIButton
+          label="Save Appointment"
+          onClick={() => handleSaveAppointment()}
+          buttonContainerStyle={styles.buttonContainer}
+        />
+      </ScrollView>
     </UIContainer>
   );
 };
@@ -210,6 +251,24 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  textButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: normalizeSize(10),
+  },
+  rowStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: normalizeSize(10),
+  },
+  appointmentFeeText: {
+    fontSize: normalizeSize(28),
+    marginLeft: normalizeSize(10),
+  },
+  buttonContainer: {
+    marginTop: normalizeSize(30),
   },
 });
 
