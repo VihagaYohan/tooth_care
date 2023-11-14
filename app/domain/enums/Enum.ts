@@ -9,13 +9,13 @@ export enum Availability {
 }
 
 export enum Date {
-  Sunday,
-  Monday,
-  Tuesday,
-  Wednesday,
-  Thursday,
-  Friday,
-  Saturday,
+  Sunday = 'Sunday',
+  Monday = 'Monday',
+  Tuesday = 'Tuesday',
+  Wednesday = 'Wednesday',
+  Thursday = 'Thursday',
+  Friday = 'Friday',
+  Saturday = 'Saturday',
 }
 
 export enum Treatment {

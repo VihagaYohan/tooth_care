@@ -196,7 +196,7 @@ const NewAppointmentScreen = ({
           data={slots}
           search
           maxHeight={300}
-          labelField="startTime"
+          labelField="title"
           valueField="id"
           placeholder={!isFocus ? 'Select a appointment time slot' : '...'}
           searchPlaceholder="Search..."
