@@ -22,14 +22,13 @@ export default class Store<T> {
   // add items to collection
   addItemToCollection(item: T) {
     if (item instanceof TreatmentType) {
-      console.log('treatment');
       this._treatmentTypesList.push(item);
     } else if (item instanceof Physician) {
-      console.log('doctor');
       this._physiciansList.push(item);
     } else if (item instanceof Appointment) {
-      console.log('appointment');
       this._appointmentsList.push(item);
+    } else if (item instanceof Patient) {
+      this._patientList.push(item);
     }
   }
 

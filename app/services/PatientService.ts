@@ -5,7 +5,7 @@ import Store from '../globalStore/Store';
 // get all patients
 export const getAllPatients = () => {
   let store = new Store<Patient>();
-  store.getList(CollectionTypes.Patient);
+  return store.getList(CollectionTypes.Patient);
 };
 
 // add new patient

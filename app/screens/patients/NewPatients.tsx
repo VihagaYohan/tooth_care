@@ -11,6 +11,11 @@ import {COLORS, STYLES} from '../../constants';
 // pre-defined data
 import Genders from '../../data/gender';
 
+// save
+import {addNewPatient, getAllPatients} from '../../services/PatientService';
+import {Patient} from '../../domain/entities';
+import {showAlert} from '../../utils/helpers';
+
 const NewPatient = () => {
   const [isFocus, setIsFocus] = useState(false);
   const [value, setValue] = useState(null);
@@ -20,6 +25,47 @@ const NewPatient = () => {
   const [telephone, setTelephone] = useState<string>();
   const [age, setAge] = useState<string>();
   const [gender, setGender] = useState();
+
+  let list = getAllPatients();
+
+  // handle add new patient
+  const handleSave = () => {
+    let validate = handleValidation();
+    if (!validate) {
+      let result = addNewPatient(
+        new Patient(
+          list.length + 1,
+          'Mr',
+          firstName,
+          lastName,
+          age,
+          gender,
+          address,
+          telephone,
+          null,
+          null,
+          undefined,
+        ),
+      );
+    }
+  };
+
+  // handle validation
+  const handleValidation = (): boolean => {
+    if (
+      firstName === undefined ||
+      lastName ||
+      address ||
+      telephone ||
+      age ||
+      gender === undefined
+    ) {
+      showAlert('Please check fields');
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <UIContainer>
@@ -79,7 +125,7 @@ const NewPatient = () => {
           }}
         />
 
-        <UIButton label="Add Patient" onClick={() => console.log(firstName)} />
+        <UIButton label="Add Patient" onClick={() => handleSave()} />
       </ScrollView>
     </UIContainer>
   );
