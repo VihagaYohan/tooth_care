@@ -144,7 +144,7 @@ const AppointmnetsScreen = ({
       <View style={{flex: 1}}>
         <View style={styles.searchContainer}>
           <UITextInput
-            placeholder="Enter appointment ID / date to filter"
+            placeholder="Enter appointment ID"
             placeholderTextColor={COLORS.white}
             onChangeText={value => setSearchText(value)}
           />
