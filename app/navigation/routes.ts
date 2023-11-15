@@ -4,6 +4,7 @@ const Routes = {
     appointmentsList: 'APPOINTMENT_LIST',
     newAppointment: 'NEW_APPOINTMENT',
     appointmentDetails: 'APPOINTMENT_DETAILS',
+    updateAppointment: 'UPDATE_APPOINTMENT',
   },
   physicians: {
     physicianList: 'PHYSICIAN_LIST',

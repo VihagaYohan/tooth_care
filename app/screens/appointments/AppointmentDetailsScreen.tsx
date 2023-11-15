@@ -6,7 +6,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
 // components
-import {UIContainer, UIButton, UITextView} from '../../components';
+import {UIContainer, UIButton, UITextView, UITextField} from '../../components';
 
 // constants
 import {STYLES, COLORS} from '../../constants';
@@ -45,6 +45,7 @@ const AppointmentDetails = ({
   route: RouteProp<any, any>;
 }) => {
   const {item} = route.params;
+  console.log(item);
 
   const [isFocus, setIsFocus] = useState(false);
   const [doctor, setDoctor] = useState<IPhysician>();
@@ -66,13 +67,14 @@ const AppointmentDetails = ({
     setDoctor(item.doctor);
     setPatient(item.patient);
     setAppointmentDate(item.appointmentDate);
-    // setTreatment(item.treatmentType);
+    setTreatment(item.treatmentType);
     setRegistration(item.appointmentFee.length > 0 ? true : false);
+    let total: number = 0;
+    item.treatmentType.map((item: any) => {
+      total = total + item.price;
+    });
+    setServiceCharge(total + 1000);
   }, []);
-
-  useEffect(() => {
-    calculateServiceCharge();
-  }, [treatment]);
 
   // handle update appointment
   const handleUpdateAppointment = () => {
@@ -122,209 +124,48 @@ const AppointmentDetails = ({
     }
   };
 
-  // calculate total service change
-  const calculateServiceCharge = () => {
-    let total: number = 0;
-    console.log(`length -> `, treatment.length);
-    treatment.map((element, index) => {
-      let treatmentItem = item.treatmentType[element - 1];
-      let price = treatmentItem.price;
-
-      total = total + price;
-    });
-
-    if (registration === true) {
-      total = total + 1000; // add registration fee to total
-    }
-
-    setServiceCharge(total);
-  };
-
-  const data = [
-    {label: 'Item 1', value: '1'},
-    {label: 'Item 2', value: '2'},
-    {label: 'Item 3', value: '3'},
-    {label: 'Item 4', value: '4'},
-    {label: 'Item 5', value: '5'},
-    {label: 'Item 6', value: '6'},
-    {label: 'Item 7', value: '7'},
-    {label: 'Item 8', value: '8'},
-  ];
-
+  // render UI
   return (
     <UIContainer>
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <Dropdown
-          style={[
-            styles.dropdown,
-            isFocus && {borderColor: COLORS.blue.blue800},
-          ]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={physicians}
-          search
-          maxHeight={300}
-          labelField="fullName"
-          valueField="id"
-          placeholder={!isFocus ? 'Select a doctor' : '...'}
-          searchPlaceholder="Search..."
-          value={doctor}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item: any) => {
-            delete item._index;
-            setDoctor(item);
-            console.log('selected doctor => ', item);
-            setIsFocus(false);
-          }}
+        <UITextField
+          label="Patient name"
+          value={item.patient.getFullName()}
+          type="field"
         />
 
-        <Dropdown
-          style={[
-            styles.dropdown,
-            isFocus && {borderColor: COLORS.blue.blue800},
-          ]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={patients}
-          search
-          maxHeight={300}
-          labelField="fullName"
-          valueField="id"
-          placeholder={!isFocus ? 'Select a patient' : '...'}
-          searchPlaceholder="Search..."
-          value={patient}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item: any) => {
-            delete item._index;
-            setPatient(item);
-            setIsFocus(false);
-          }}
+        <UITextField
+          label="Doctor name"
+          value={item.doctor.getFullName()}
+          type="field"
         />
 
-        <Dropdown
-          style={[
-            styles.dropdown,
-            isFocus && {borderColor: COLORS.blue.blue100},
-          ]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={slots}
-          search
-          maxHeight={300}
-          labelField="title"
-          valueField="id"
-          placeholder={!isFocus ? 'Select a appointment time slot' : '...'}
-          searchPlaceholder="Search..."
-          value={appointmentDate}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item: any) => {
-            delete item._index;
-            setAppointmentDate(item);
-            // setValue(item.value);
-            setIsFocus(false);
-          }}
+        <UITextField
+          label="Appointment date"
+          value={item.appointmentDate.title}
+          type="field"
         />
 
-        <MultiSelect
-          style={styles.dropdown}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          search
-          /* data={data}
-          labelField="label"
-          valueField="value" */
-          data={item.treatmentType}
-          labelField="type"
-          valueField="id"
-          placeholder={!isFocus ? 'Select treatment' : '...'}
-          searchPlaceholder="Search..."
-          value={treatment}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(selectedItem: any) => {
-            /* let list: Treatment[] = [];
-            list = treatment;
-            let element = item.treatmentType[selectedItem[0]];
-            list.push(element);
-            setTreatment(list);
-            setIsFocus(false); */
-            setTreatment(selectedItem);
-            setIsFocus(false);
-
-            console.log(treatment);
-            /* delete item._index;
-            setTreatment(item);
-            setIsFocus(false); */
-          }}
+        <UITextField
+          label="Appointment status"
+          value={item.status}
+          type="field"
         />
 
-        <Dropdown
-          style={[
-            styles.dropdown,
-            isFocus && {borderColor: COLORS.blue.blue800},
-          ]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={statusList}
-          search
-          maxHeight={300}
-          labelField="status"
-          valueField="id"
-          placeholder={!isFocus ? 'Select a appointment status' : '...'}
-          searchPlaceholder="Search..."
-          value={status}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={(item: any) => {
-            delete item._index;
-            setStatus(item);
-            setIsFocus(false);
-          }}
+        <UITextField
+          label="Treatment types"
+          value={item.treatmentType}
+          type="tag"
         />
 
-        <View style={styles.rowStyle}>
-          <CheckBox
-            disabled={false}
-            value={registration}
-            onValueChange={newValue => setRegistration(newValue)}
-          />
-          <UITextView
-            text={'Paid appointment fee Rs. 1000.00'}
-            textStyle={styles.appointmentFeeText}
-          />
-        </View>
-
-        <UITextView
-          text={`Total service charge is : Rs. ${serviceCharge}`}
-          textStyle={{
-            textAlign: 'center',
-            marginVertical: normalizeSize(30),
-            fontSize: normalizeSize(30),
-          }}
-          numberOfLines={2}
+        <UITextField
+          label="Total service charge (+ Rs. 1000.00 registration fee)"
+          value={`Rs.${serviceCharge.toFixed(2)}`}
+          type="field"
         />
 
         <UIButton
           label="Update Appointment"
-          onClick={() => handleUpdateAppointment()}
-          buttonContainerStyle={styles.buttonContainer}
-        />
-
-        <UIButton
-          label="Generate Invoice"
           onClick={() => handleUpdateAppointment()}
           buttonContainerStyle={styles.buttonContainer}
         />

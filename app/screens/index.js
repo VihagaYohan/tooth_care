@@ -5,6 +5,7 @@ export {default as NewPatient} from './patients/NewPatients';
 export {default as AppointmnetsScreen} from './appointments/AppointmentsScreen';
 export {default as NewAppointmentScreen} from './appointments/NewAppointments';
 export {default as AppointmentDetailsScreen} from './appointments/AppointmentDetailsScreen';
+export {default as UpdateAppointmentScreen} from './appointments/UpdateAppointmentScreen';
 
 // physicians
 export {default as PhysiciansScreen} from './physicians/PhysiciansListScreen';
