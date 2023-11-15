@@ -35,6 +35,7 @@ import {Treatment} from '../../domain/enums/Enum';
 import {
   addAppointment,
   getAllAppointments,
+  updateAppointment,
 } from '../../services/AppointmentService';
 
 const AppointmentDetails = ({
@@ -52,7 +53,7 @@ const AppointmentDetails = ({
   const [appointmentDate, setAppointmentDate] = useState<AppointmentDates>();
   const [status, setStatus] = useState();
   const [treatment, setTreatment] = useState<Treatment[]>([]);
-  const [registration, setRegistration] = useState<boolean>();
+  const [registration, setRegistration] = useState<boolean>(true);
   const [serviceCharge, setServiceCharge] = useState<number>(0);
 
   // data source
@@ -66,8 +67,7 @@ const AppointmentDetails = ({
     setDoctor(item.doctor);
     setPatient(item.patient);
     setAppointmentDate(item.appointmentDate);
-    setTreatment(item.treatmentType);
-    setRegistration(item.appointmentFee.length > 0 ? true : false);
+    setRegistration(item.appointmentFee === 1000 ? true : false);
   }, []);
 
   useEffect(() => {
@@ -76,35 +76,22 @@ const AppointmentDetails = ({
 
   // handle update appointment
   const handleUpdateAppointment = () => {
-    let appointment = new Appointment(
-      item.appointmentId,
-      patient,
-      doctor,
-      appointmentDate,
-      registration === true ? 1000 : 0,
-      treatment,
-      status,
-    );
-    console.log(appointment);
-    /* let validate = handleValidation();
-    if (!validate) {
+    let validate = handleValidation();
+    if (validate === true) {
       let appointment = new Appointment(
-        list.length + 1,
+        item.appointmentId,
         patient,
         doctor,
         appointmentDate,
-        1000,
-        null,
+        registration === true ? 1000 : 0,
+        treatment,
         status,
       );
-      let result = addAppointment(appointment);
-      if (result) {
-        showAlert('New appointment has been updated');
-        navigation.navigate(Routes.appointmnets.appointmentsList);
-      } else {
-        showAlert('Please select a different time slot');
-      }
-    } */
+
+      updateAppointment(item.appointmentId, appointment);
+      showAlert('Appointment has been updated');
+      navigation.navigate(Routes.appointmnets.appointmentsList);
+    }
   };
 
   // handle validation
@@ -124,34 +111,22 @@ const AppointmentDetails = ({
 
   // calculate total service change
   const calculateServiceCharge = () => {
-    const price = (item.treatmentType[0] as any).price;
-    console.log(price);
-    /* let total: number = 0;
-    console.log(`length -> `, treatment.length);
-    treatment.map((element, index) => {
-      let treatmentItem = item.treatmentType[element - 1];
-      let price = treatmentItem.price;
+    let total: number = 0;
+    treatment.map((element: any, index) => {
+      let treatmentItem = treatmentList[element - 1];
+      let price = (treatmentItem as any).price;
+      //console.log(treatmentItem, element);
 
       total = total + price;
     });
 
     if (registration === true) {
       total = total + 1000; // add registration fee to total
+      console.log(registration);
     }
 
-    setServiceCharge(total); */
+    setServiceCharge(total);
   };
-
-  const data = [
-    {label: 'Item 1', value: '1'},
-    {label: 'Item 2', value: '2'},
-    {label: 'Item 3', value: '3'},
-    {label: 'Item 4', value: '4'},
-    {label: 'Item 5', value: '5'},
-    {label: 'Item 6', value: '6'},
-    {label: 'Item 7', value: '7'},
-    {label: 'Item 8', value: '8'},
-  ];
 
   return (
     <UIContainer>
@@ -285,7 +260,7 @@ const AppointmentDetails = ({
 
         <View style={styles.rowStyle}>
           <CheckBox
-            disabled={false}
+            disabled={true}
             value={registration}
             onValueChange={newValue => setRegistration(newValue)}
           />
@@ -306,7 +281,7 @@ const AppointmentDetails = ({
         />
 
         <UIButton
-          label="Update Appointment"
+          label="Save Appointment"
           onClick={() => handleUpdateAppointment()}
           buttonContainerStyle={styles.buttonContainer}
         />

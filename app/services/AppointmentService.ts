@@ -31,4 +31,5 @@ export const addAppointment = (newItem: Appointment): boolean => {
 // update appointment
 export const updateAppointment = (id: number, appointment: Appointment) => {
   let store = new Store<Appointment>();
+  store.updateItem(id, appointment);
 };

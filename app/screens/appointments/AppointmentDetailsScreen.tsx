@@ -11,6 +11,7 @@ import {normalizeSize, showAlert} from '../../utils/helpers';
 
 // models
 import Appointment from '../../domain/entities/Appointments';
+import {Routes} from '../../navigation';
 
 const AppointmentDetails = ({
   navigation,
@@ -35,50 +36,9 @@ const AppointmentDetails = ({
 
   // handle update appointment
   const handleUpdateAppointment = () => {
-    let appointment = new Appointment(
-      item.appointmentId,
-      patient,
-      doctor,
-      appointmentDate,
-      registration === true ? 1000 : 0,
-      treatment,
-      status,
-    );
-    console.log(appointment);
-    /* let validate = handleValidation();
-    if (!validate) {
-      let appointment = new Appointment(
-        list.length + 1,
-        patient,
-        doctor,
-        appointmentDate,
-        1000,
-        null,
-        status,
-      );
-      let result = addAppointment(appointment);
-      if (result) {
-        showAlert('New appointment has been updated');
-        navigation.navigate(Routes.appointmnets.appointmentsList);
-      } else {
-        showAlert('Please select a different time slot');
-      }
-    } */
-  };
-
-  // handle validation
-  const handleValidation = (): boolean => {
-    if (
-      doctor === undefined ||
-      patient === undefined ||
-      appointmentDate === undefined ||
-      status === undefined
-    ) {
-      showAlert('Please check fields');
-      return false;
-    } else {
-      return true;
-    }
+    navigation.navigate(Routes.appointmnets.updateAppointment, {
+      item,
+    });
   };
 
   // render UI
