@@ -4,8 +4,6 @@ import {Dropdown} from 'react-native-element-dropdown';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
-import {Formik} from 'formik';
-import * as Yup from 'yup';
 
 // components
 import {

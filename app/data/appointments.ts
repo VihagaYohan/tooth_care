@@ -6,6 +6,15 @@ import {Physicians} from './physicians';
 import {Treatments} from './treatments';
 
 const Appointments: Appointment[] = [
+  new Appointment(
+    1,
+    Patients[0],
+    Physicians[1],
+    AppointmentSlots[0],
+    1000,
+    [Treatments[0], Treatments[1]],
+    AppointmentStatus.Confirmed,
+  ),
   /* new Appointment(
     1,
     Patients[0],

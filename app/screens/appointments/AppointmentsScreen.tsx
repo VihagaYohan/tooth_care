@@ -69,17 +69,20 @@ const AppointmnetsScreen = ({
         let item = [];
         let appointmentStatus: any = element.status;
         item.push(element.appointmentId);
-        item.push(moment(element.appointmentDate).format('DD MMM YYYY'));
+        // item.push(moment(element.appointmentDate).format('DD MMM YYYY'));
+        item.push('2023 March 23');
         item.push(element.patient.getFullName());
         item.push(element.doctor.getFullName());
-        item.push(appointmentStatus.status.toUpperCase());
+        // item.push(appointmentStatus.status.toUpperCase());
+        item.push('Confirmed');
         item.push(
           <TouchableOpacity
-            style={{
-              paddingVertical: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+            style={styles.viewButtonStyle}
+            onPress={() =>
+              navigation.navigate(Routes.appointmnets.appointmentDetails, {
+                item: element,
+              })
+            }>
             <UITextView text="View" textStyle={{color: COLORS.blue.blue800}} />
           </TouchableOpacity>,
         );
@@ -161,6 +164,11 @@ const styles = StyleSheet.create({
   text: {margin: 6},
   dataWrapper: {},
   row: {height: 60, backgroundColor: '#E7E6E1'},
+  viewButtonStyle: {
+    paddingVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default AppointmnetsScreen;
