@@ -45,6 +45,7 @@ const AppointmentDetails = ({
   navigation: StackNavigationProp<any, any>;
   route: RouteProp<any, any>;
 }) => {
+  åå;
   const {item} = route.params;
 
   const [isFocus, setIsFocus] = useState(false);

@@ -44,7 +44,18 @@ export const updateAppointment = (id: number, appointment: Appointment) => {
 };
 
 // filter appointment by appointment date
-export const filterAppointment = (date: string) => {
+export const filterAppointmentByDate = (date: string) => {
   let store = new Store<Appointment>();
-  store.filterRecord(CollectionTypes.Appointments, date);
+  return store.filterRecord(CollectionTypes.Appointments, date);
+};
+
+// get appointment dates
+export const getAppointmentDates = () => {
+  let list: Appointment[] = getAllAppointments();
+  const appointmentDates = new Set<string | undefined>();
+  list.map((item: Appointment, index: number) => {
+    appointmentDates.add(item.appointmentDate.title?.toString());
+  });
+
+  return Array.from(appointmentDates);
 };

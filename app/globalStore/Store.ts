@@ -86,7 +86,7 @@ export default class Store<T> {
     } else if (collection === CollectionTypes.Patient) {
     } else if (collection === CollectionTypes.Appointments) {
       let item = this._appointmentsList.filter(
-        (item: Appointment) => item.appointmentId === 1,
+        (item: Appointment) => item.appointmentDate.title === date,
       );
       return item;
     }

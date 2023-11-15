@@ -1,5 +1,11 @@
 import React, {Component, useState, useEffect} from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Modal,
+  TouchableOpacity,
+} from 'react-native';
 import {Table, Row, Rows, TableWrapper} from 'react-native-table-component';
 import moment from 'moment';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -17,18 +23,24 @@ import {
 } from '../../components';
 
 // constants
-import {ICONS, COLORS} from '../../constants';
+import {ICONS, COLORS, DIMENSION} from '../../constants';
 
 // services
 import {
   getAllAppointments,
   getAppointmentById,
+  filterAppointmentByDate,
+  getAppointmentDates,
 } from '../../services/AppointmentService';
+
+// models
 import Appointment from '../../domain/entities/Appointments';
 
 // navigation
 import {Routes} from '../../navigation';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+
+// utils
+import {normalizeSize} from '../../utils/helpers';
 
 const {AntDesignIcon} = ICONS;
 
@@ -48,7 +60,9 @@ const AppointmnetsScreen = ({
     'Actions',
   ]);
   const [tableData, setTableData] = useState([]);
-  const [appointmentId, setAppointmentId] = useState<string>();
+  const [searchText, setSearchText] = useState<string>();
+  const [visible, setVisible] = useState<boolean>(false);
+  const [appointments, setAppointments] = useState<string[] | any[]>([]);
 
   // column widths
   const widthArr = [40, 100, 120, 100, 120, 100];
@@ -66,42 +80,16 @@ const AppointmnetsScreen = ({
   // fetch all appointments
   const fetchAllAppointments = () => {
     let result = getAllAppointments();
+    setAppointments(getAppointmentDates());
     if (result != undefined) {
       createTableData(result);
-      /* let parent: any = [];
-
-      result.forEach((element: Appointment) => {
-        let item = [];
-        let appointmentStatus: any = element.status;
-        item.push(element.appointmentId);
-        // item.push(moment(element.appointmentDate).format('DD MMM YYYY'));
-        item.push('2023 March 23');
-        item.push(element.patient.getFullName());
-        item.push(element.doctor.getFullName());
-        // item.push(appointmentStatus.status.toUpperCase());
-        item.push('Confirmed');
-        item.push(
-          <TouchableOpacity
-            style={styles.viewButtonStyle}
-            onPress={() =>
-              navigation.navigate(Routes.appointmnets.appointmentDetails, {
-                item: element,
-              })
-            }>
-            <UITextView text="View" textStyle={{color: COLORS.blue.blue800}} />
-          </TouchableOpacity>,
-        );
-        parent.push(item);
-      });
-
-      setTableData(parent); */
     }
   };
 
   // find appintment by id
   const findAppointmnet = () => {
-    if (appointmentId !== undefined && appointmentId?.length > 0) {
-      let list = getAppointmentById(parseInt(appointmentId));
+    if (searchText !== undefined && searchText?.length > 0) {
+      let list = getAppointmentById(parseInt(searchText));
       createTableData(list);
     } else {
       fetchAllAppointments();
@@ -109,7 +97,16 @@ const AppointmnetsScreen = ({
   };
 
   // filter by appointment date
-  const filterAppointment = () => {};
+  const filterAppointment = (appointmentDate: string) => {
+    if (appointmentDate !== undefined && appointmentDate.length > 0) {
+      const list: Appointment[] = filterAppointmentByDate(
+        appointmentDate.toString(),
+      );
+      createTableData(list);
+    } else {
+      fetchAllAppointments();
+    }
+  };
 
   // create table data
   const createTableData = (tableData: Appointment[]) => {
@@ -149,13 +146,13 @@ const AppointmnetsScreen = ({
           <UITextInput
             placeholder="Enter appointment ID / date to filter"
             placeholderTextColor={COLORS.white}
-            onChangeText={value => setAppointmentId(value)}
+            onChangeText={value => setSearchText(value)}
           />
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <UITextButton label="Search" onClick={() => findAppointmnet()} />
 
-            <UIIconButton onClick={() => console.log('filter clicked')}>
+            <UIIconButton onClick={() => setVisible(!visible)}>
               <AntDesignIcon
                 name="filter"
                 size={25}
@@ -197,6 +194,46 @@ const AppointmnetsScreen = ({
           }
         />
       </View>
+
+      <Modal visible={visible} transparent={false} animationType="slide">
+        <View style={{flex: 1, padding: DIMENSION.MARGIN}}>
+          <View style={styles.modalTitleContainer}>
+            <UITextView
+              text="Filter by: "
+              textStyle={{fontSize: normalizeSize(30)}}
+            />
+
+            <UITextButton
+              label="Clear Filters"
+              onClick={() => {
+                setVisible(false);
+                fetchAllAppointments();
+              }}
+            />
+          </View>
+
+          {appointments.length > 1 ? (
+            appointments.map((item: string, index: number) => {
+              return (
+                <TouchableOpacity
+                  key={`appointment-dates-index-${index}`}
+                  style={styles.itemStyle}
+                  onPress={() => {
+                    filterAppointment(item);
+                    setVisible(false);
+                  }}>
+                  <UITextView text={item} />
+                </TouchableOpacity>
+              );
+            })
+          ) : (
+            <UITextView
+              text={`${appointments.length}`}
+              textStyle={{alignSelf: 'center'}}
+            />
+          )}
+        </View>
+      </Modal>
     </UIContainer>
   );
 };
@@ -215,6 +252,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modalTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: normalizeSize(20),
+  },
+  itemStyle: {
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderColor: COLORS.black,
   },
 });
 
