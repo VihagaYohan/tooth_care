@@ -2,6 +2,13 @@ import Appointment from '../domain/entities/Appointments';
 import {CollectionTypes} from '../domain/enums/Enum';
 import Store from '../globalStore/Store';
 
+// get appointment by Id
+export const getAppointmentById = (id: number) => {
+  let store = new Store<Appointment>();
+  let list = store.getItem(CollectionTypes.Appointments, id);
+  return list;
+};
+
 // get all appointments
 export const getAllAppointments = () => {
   let store = new Store<Appointment>();

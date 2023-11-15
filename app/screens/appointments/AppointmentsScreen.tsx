@@ -20,7 +20,10 @@ import {
 import {ICONS, COLORS} from '../../constants';
 
 // services
-import {getAllAppointments} from '../../services/AppointmentService';
+import {
+  getAllAppointments,
+  getAppointmentById,
+} from '../../services/AppointmentService';
 import Appointment from '../../domain/entities/Appointments';
 
 // navigation
@@ -45,9 +48,10 @@ const AppointmnetsScreen = ({
     'Actions',
   ]);
   const [tableData, setTableData] = useState([]);
+  const [appointmentId, setAppointmentId] = useState<string>();
 
   // column widths
-  const widthArr = [40, 100, 80, 100, 120, 100];
+  const widthArr = [40, 100, 120, 100, 120, 100];
 
   useEffect(() => {
     navigation.addListener('focus', () => {
@@ -63,9 +67,53 @@ const AppointmnetsScreen = ({
   const fetchAllAppointments = () => {
     let result = getAllAppointments();
     if (result != undefined) {
-      let parent: any = [];
+      createTableData(result);
+      /* let parent: any = [];
 
       result.forEach((element: Appointment) => {
+        let item = [];
+        let appointmentStatus: any = element.status;
+        item.push(element.appointmentId);
+        // item.push(moment(element.appointmentDate).format('DD MMM YYYY'));
+        item.push('2023 March 23');
+        item.push(element.patient.getFullName());
+        item.push(element.doctor.getFullName());
+        // item.push(appointmentStatus.status.toUpperCase());
+        item.push('Confirmed');
+        item.push(
+          <TouchableOpacity
+            style={styles.viewButtonStyle}
+            onPress={() =>
+              navigation.navigate(Routes.appointmnets.appointmentDetails, {
+                item: element,
+              })
+            }>
+            <UITextView text="View" textStyle={{color: COLORS.blue.blue800}} />
+          </TouchableOpacity>,
+        );
+        parent.push(item);
+      });
+
+      setTableData(parent); */
+    }
+  };
+
+  // find appintment
+  const findAppointmnet = () => {
+    if (appointmentId !== undefined && appointmentId?.length > 0) {
+      let list = getAppointmentById(parseInt(appointmentId));
+      createTableData(list);
+    } else {
+      fetchAllAppointments();
+    }
+  };
+
+  // create table data
+  const createTableData = (tableData: Appointment[]) => {
+    if (tableData != undefined) {
+      let parent: any = [];
+
+      tableData.forEach((element: Appointment) => {
         let item = [];
         let appointmentStatus: any = element.status;
         item.push(element.appointmentId);
@@ -100,13 +148,11 @@ const AppointmnetsScreen = ({
           <UITextInput
             placeholder="Enter appointment ID"
             placeholderTextColor={COLORS.white}
+            onChangeText={value => setAppointmentId(value)}
           />
 
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <UITextButton
-              label="Search"
-              onClick={() => console.log('Button clicked')}
-            />
+            <UITextButton label="Search" onClick={() => findAppointmnet()} />
 
             <UIIconButton onClick={() => console.log('filter clicked')}>
               <AntDesignIcon

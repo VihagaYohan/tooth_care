@@ -65,4 +65,17 @@ export default class Store<T> {
     }
     return result;
   }
+
+  // return item based on Id
+  getItem<T>(collection: CollectionTypes, id: number) {
+    if (collection === CollectionTypes.Physician) {
+    } else if (collection === CollectionTypes.TreatmentTypes) {
+    } else if (collection === CollectionTypes.Patient) {
+    } else if (collection === CollectionTypes.Appointments) {
+      let item = this._appointmentsList.filter(
+        (item: Appointment) => item.appointmentId === id,
+      );
+      return item;
+    }
+  }
 }

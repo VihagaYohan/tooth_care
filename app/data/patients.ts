@@ -15,4 +15,17 @@ export const Patients: Patient[] = [
     undefined,
     undefined,
   ),
+  new Patient(
+    2,
+    'Mr',
+    'Andrew',
+    'Smith',
+    18,
+    Gender.Male,
+    'Sample address 1',
+    '018988373',
+    undefined,
+    undefined,
+    undefined,
+  ),
 ];

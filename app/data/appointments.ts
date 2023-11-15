@@ -15,6 +15,16 @@ const Appointments: Appointment[] = [
     [Treatments[0], Treatments[1]],
     AppointmentStatus.Confirmed,
   ),
+  new Appointment(
+    2,
+    Patients[1],
+    Physicians[1],
+    AppointmentSlots[1],
+    1000,
+    [Treatments[2]],
+    AppointmentStatus.Confirmed,
+  ),
+
   /* new Appointment(
     1,
     Patients[0],
