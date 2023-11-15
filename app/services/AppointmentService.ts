@@ -40,3 +40,9 @@ export const updateAppointment = (id: number, appointment: Appointment) => {
   let store = new Store<Appointment>();
   store.updateItem(id, appointment);
 };
+
+// filter appointment by appointment date
+export const filterAppointment = (date: string) => {
+  let store = new Store<Appointment>();
+  store.filterRecord(CollectionTypes.Appointments, date);
+};

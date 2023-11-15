@@ -78,4 +78,17 @@ export default class Store<T> {
       return item;
     }
   }
+
+  // filter records by date
+  filterRecord<T>(collection: CollectionTypes, date: string) {
+    if (collection === CollectionTypes.Physician) {
+    } else if (collection === CollectionTypes.TreatmentTypes) {
+    } else if (collection === CollectionTypes.Patient) {
+    } else if (collection === CollectionTypes.Appointments) {
+      let item = this._appointmentsList.filter(
+        (item: Appointment) => item.appointmentId === 1,
+      );
+      return item;
+    }
+  }
 }

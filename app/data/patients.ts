@@ -4,9 +4,9 @@ import {Gender} from '../domain/enums/Enum';
 export const Patients: Patient[] = [
   new Patient(
     1,
-    'Mr',
-    'John',
-    'Doe',
+    'Mrs',
+    'Jessica',
+    'Drew',
     18,
     Gender.Male,
     'Sample address 1',

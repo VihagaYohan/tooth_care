@@ -98,7 +98,7 @@ const AppointmnetsScreen = ({
     }
   };
 
-  // find appintment
+  // find appintment by id
   const findAppointmnet = () => {
     if (appointmentId !== undefined && appointmentId?.length > 0) {
       let list = getAppointmentById(parseInt(appointmentId));
@@ -107,6 +107,9 @@ const AppointmnetsScreen = ({
       fetchAllAppointments();
     }
   };
+
+  // filter by appointment date
+  const filterAppointment = () => {};
 
   // create table data
   const createTableData = (tableData: Appointment[]) => {
@@ -146,7 +149,7 @@ const AppointmnetsScreen = ({
       <View style={{flex: 1}}>
         <View style={styles.searchContainer}>
           <UITextInput
-            placeholder="Enter appointment ID"
+            placeholder="Enter appointment ID / date to filter"
             placeholderTextColor={COLORS.white}
             onChangeText={value => setAppointmentId(value)}
           />
