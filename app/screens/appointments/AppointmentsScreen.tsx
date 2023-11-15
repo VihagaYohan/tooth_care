@@ -113,17 +113,12 @@ const AppointmnetsScreen = ({
 
   // create table data
   const createTableData = (tableData: Appointment[]) => {
-    console.log(tableData);
     if (tableData != undefined) {
       let parent: any = [];
 
       tableData.forEach((element: Appointment) => {
         let item = [];
-        let appointmentStatus: any = element.status;
-        const status = appointmentStatus as any;
-        console.log(element.status);
 
-        console.log(status);
         item.push(element.appointmentId);
         item.push(element.appointmentDate.title);
         item.push(element.patient.getFullName());
