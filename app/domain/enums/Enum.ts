@@ -34,10 +34,10 @@ export enum CollectionTypes {
 }
 
 export enum AppointmentStatus {
-  Pending = 'pending',
-  Confirmed = 'confirmed',
-  Cancelled = 'cancelled',
-  Completed = 'completed',
+  Pending = 'Pending',
+  Confirmed = 'Confirmed',
+  Cancelled = 'Cancelled',
+  Completed = 'Completed',
 }
 
 export enum Gender {

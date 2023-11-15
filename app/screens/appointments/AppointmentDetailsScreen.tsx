@@ -1,6 +1,6 @@
 import React, {Component, useState, useEffect} from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
-import {Dropdown} from 'react-native-element-dropdown';
+import {Dropdown, MultiSelect} from 'react-native-element-dropdown';
 import CheckBox from '@react-native-community/checkbox';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
@@ -46,13 +46,13 @@ const AppointmentDetails = ({
 }) => {
   const {item} = route.params;
 
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState();
   const [isFocus, setIsFocus] = useState(false);
   const [doctor, setDoctor] = useState<IPhysician>();
   const [patient, setPatient] = useState<Patient>();
   const [appointmentDate, setAppointmentDate] = useState<AppointmentDates>();
   const [status, setStatus] = useState();
-  const [treatment, setTreatment] = useState<Treatment[]>();
+  const [treatment, setTreatment] = useState<Treatment[]>(item.treatmentType);
   const [registration, setRegistration] = useState<boolean>();
 
   // data source
@@ -61,6 +61,14 @@ const AppointmentDetails = ({
   const slots = AppointmentSlots;
   const statusList = AppointmentStatusList;
   const treatmentList = Treatments;
+
+  useEffect(() => {
+    setDoctor(item.doctor);
+    setPatient(item.patient);
+    setAppointmentDate(item.appointmentDate);
+    setTreatment(item.treatmentType);
+    setRegistration(item.appointmentFee.length > 0 ? true : false);
+  }, []);
 
   // handle save appointment
   const handleSaveAppointment = () => {
@@ -119,12 +127,13 @@ const AppointmentDetails = ({
           valueField="id"
           placeholder={!isFocus ? 'Select a doctor' : '...'}
           searchPlaceholder="Search..."
-          value={value}
+          value={doctor}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(item: any) => {
             delete item._index;
             setDoctor(item);
+            console.log('selected doctor => ', item);
             setIsFocus(false);
           }}
         />
@@ -145,7 +154,7 @@ const AppointmentDetails = ({
           valueField="id"
           placeholder={!isFocus ? 'Select a patient' : '...'}
           searchPlaceholder="Search..."
-          value={value}
+          value={patient}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(item: any) => {
@@ -171,13 +180,35 @@ const AppointmentDetails = ({
           valueField="id"
           placeholder={!isFocus ? 'Select a appointment time slot' : '...'}
           searchPlaceholder="Search..."
-          value={value}
+          value={appointmentDate}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(item: any) => {
             delete item._index;
             setAppointmentDate(item);
             // setValue(item.value);
+            setIsFocus(false);
+          }}
+        />
+
+        <MultiSelect
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          search
+          data={treatment}
+          labelField="type"
+          valueField="id"
+          placeholder={!isFocus ? 'Select treatment' : '...'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(item: any) => {
+            delete item._index;
+            setValue(item);
             setIsFocus(false);
           }}
         />
@@ -198,7 +229,7 @@ const AppointmentDetails = ({
           valueField="id"
           placeholder={!isFocus ? 'Select a appointment status' : '...'}
           searchPlaceholder="Search..."
-          value={value}
+          value={status}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(item: any) => {
