@@ -46,14 +46,14 @@ const AppointmentDetails = ({
 }) => {
   const {item} = route.params;
 
-  const [value, setValue] = useState();
   const [isFocus, setIsFocus] = useState(false);
   const [doctor, setDoctor] = useState<IPhysician>();
   const [patient, setPatient] = useState<Patient>();
   const [appointmentDate, setAppointmentDate] = useState<AppointmentDates>();
   const [status, setStatus] = useState();
-  const [treatment, setTreatment] = useState<Treatment[]>(item.treatmentType);
+  const [treatment, setTreatment] = useState<Treatment[]>([]);
   const [registration, setRegistration] = useState<boolean>();
+  const [serviceCharge, setServiceCharge] = useState<number>(0);
 
   // data source
   const physicians = Physicians;
@@ -66,14 +66,28 @@ const AppointmentDetails = ({
     setDoctor(item.doctor);
     setPatient(item.patient);
     setAppointmentDate(item.appointmentDate);
-    setTreatment(item.treatmentType);
+    // setTreatment(item.treatmentType);
     setRegistration(item.appointmentFee.length > 0 ? true : false);
   }, []);
 
-  // handle save appointment
-  const handleSaveAppointment = () => {
-    let validate = handleValidation();
-    if (validate) {
+  useEffect(() => {
+    calculateServiceCharge();
+  }, [treatment]);
+
+  // handle update appointment
+  const handleUpdateAppointment = () => {
+    let appointment = new Appointment(
+      item.appointmentId,
+      patient,
+      doctor,
+      appointmentDate,
+      registration === true ? 1000 : 0,
+      treatment,
+      status,
+    );
+    console.log(appointment);
+    /* let validate = handleValidation();
+    if (!validate) {
       let appointment = new Appointment(
         list.length + 1,
         patient,
@@ -90,7 +104,7 @@ const AppointmentDetails = ({
       } else {
         showAlert('Please select a different time slot');
       }
-    }
+    } */
   };
 
   // handle validation
@@ -107,6 +121,35 @@ const AppointmentDetails = ({
       return true;
     }
   };
+
+  // calculate total service change
+  const calculateServiceCharge = () => {
+    let total: number = 0;
+    console.log(`length -> `, treatment.length);
+    treatment.map((element, index) => {
+      let treatmentItem = item.treatmentType[element - 1];
+      let price = treatmentItem.price;
+
+      total = total + price;
+    });
+
+    if (registration === true) {
+      total = total + 1000; // add registration fee to total
+    }
+
+    setServiceCharge(total);
+  };
+
+  const data = [
+    {label: 'Item 1', value: '1'},
+    {label: 'Item 2', value: '2'},
+    {label: 'Item 3', value: '3'},
+    {label: 'Item 4', value: '4'},
+    {label: 'Item 5', value: '5'},
+    {label: 'Item 6', value: '6'},
+    {label: 'Item 7', value: '7'},
+    {label: 'Item 8', value: '8'},
+  ];
 
   return (
     <UIContainer>
@@ -198,18 +241,31 @@ const AppointmentDetails = ({
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
           search
-          data={treatment}
+          /* data={data}
+          labelField="label"
+          valueField="value" */
+          data={item.treatmentType}
           labelField="type"
           valueField="id"
           placeholder={!isFocus ? 'Select treatment' : '...'}
           searchPlaceholder="Search..."
-          value={value}
+          value={treatment}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
-          onChange={(item: any) => {
-            delete item._index;
-            setValue(item);
+          onChange={(selectedItem: any) => {
+            /* let list: Treatment[] = [];
+            list = treatment;
+            let element = item.treatmentType[selectedItem[0]];
+            list.push(element);
+            setTreatment(list);
+            setIsFocus(false); */
+            setTreatment(selectedItem);
             setIsFocus(false);
+
+            console.log(treatment);
+            /* delete item._index;
+            setTreatment(item);
+            setIsFocus(false); */
           }}
         />
 
@@ -252,7 +308,7 @@ const AppointmentDetails = ({
         </View>
 
         <UITextView
-          text={`Total service charge is : Rs. ${1000}`}
+          text={`Total service charge is : Rs. ${serviceCharge}`}
           textStyle={{
             textAlign: 'center',
             marginVertical: normalizeSize(30),
@@ -263,13 +319,13 @@ const AppointmentDetails = ({
 
         <UIButton
           label="Update Appointment"
-          onClick={() => handleSaveAppointment()}
+          onClick={() => handleUpdateAppointment()}
           buttonContainerStyle={styles.buttonContainer}
         />
 
         <UIButton
           label="Generate Invoice"
-          onClick={() => handleSaveAppointment()}
+          onClick={() => handleUpdateAppointment()}
           buttonContainerStyle={styles.buttonContainer}
         />
       </ScrollView>
@@ -307,6 +363,9 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 16,
+  },
+  selectedStyle: {
+    borderRadius: 12,
   },
   iconStyle: {
     width: 20,

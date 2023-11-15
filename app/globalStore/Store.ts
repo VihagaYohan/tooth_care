@@ -40,9 +40,14 @@ export default class Store<T> {
   }
 
   // update an item from collection
-  updateItem(item: T) {
+  updateItem(id: number, item: T) {
     if (item instanceof TreatmentType) {
     } else if (item instanceof Physician) {
+    } else if (item instanceof Appointment) {
+      let index = this._appointmentsList.findIndex(
+        (element, index) => element.appointmentId === id,
+      );
+      this._appointmentsList[index] = item;
     }
   }
 

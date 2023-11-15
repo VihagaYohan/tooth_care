@@ -27,3 +27,8 @@ export const addAppointment = (newItem: Appointment): boolean => {
     return false;
   }
 };
+
+// update appointment
+export const updateAppointment = (id: number, appointment: Appointment) => {
+  let store = new Store<Appointment>();
+};
