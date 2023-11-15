@@ -1,6 +1,7 @@
 import Appointment from '../domain/entities/Appointments';
 import {AppointmentStatus} from '../domain/enums/Enum';
 import {AppointmentSlots} from './appointment_dates';
+import AppointmentStatusList from './appointment_status';
 import {Patients} from './patients';
 import {Physicians} from './physicians';
 import {Treatments} from './treatments';
@@ -13,7 +14,7 @@ const Appointments: Appointment[] = [
     AppointmentSlots[0],
     1000,
     [Treatments[0], Treatments[1]],
-    AppointmentStatus.Confirmed,
+    AppointmentStatusList[0],
   ),
   new Appointment(
     2,
@@ -22,7 +23,7 @@ const Appointments: Appointment[] = [
     AppointmentSlots[1],
     1000,
     [Treatments[2]],
-    AppointmentStatus.Confirmed,
+    AppointmentStatusList[0],
   ),
 
   /* new Appointment(

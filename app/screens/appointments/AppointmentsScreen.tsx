@@ -113,19 +113,22 @@ const AppointmnetsScreen = ({
 
   // create table data
   const createTableData = (tableData: Appointment[]) => {
+    console.log(tableData);
     if (tableData != undefined) {
       let parent: any = [];
 
       tableData.forEach((element: Appointment) => {
         let item = [];
         let appointmentStatus: any = element.status;
+        const status = appointmentStatus as any;
+        console.log(element.status);
+
+        console.log(status);
         item.push(element.appointmentId);
-        // item.push(moment(element.appointmentDate).format('DD MMM YYYY'));
-        item.push('2023 March 23');
+        item.push(element.appointmentDate.title);
         item.push(element.patient.getFullName());
         item.push(element.doctor.getFullName());
-        // item.push(appointmentStatus.status.toUpperCase());
-        item.push('Confirmed');
+        item.push(element.status.status);
         item.push(
           <TouchableOpacity
             style={styles.viewButtonStyle}
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
   head: {height: 60, backgroundColor: '#f1f8ff'},
   text: {margin: 6},
   dataWrapper: {},
-  row: {height: 60, backgroundColor: '#E7E6E1'},
+  row: {height: 100, backgroundColor: '#E7E6E1'},
   viewButtonStyle: {
     paddingVertical: 10,
     justifyContent: 'center',

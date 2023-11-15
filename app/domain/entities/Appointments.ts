@@ -13,6 +13,6 @@ export default class Appointment implements IAppointment {
     public appointmentDate: IAppointmentDates,
     public appointmentFee: number,
     public treatmentType: TreatmentType[],
-    public status: AppointmentStatus,
+    public status: {id: number; status: AppointmentStatus},
   ) {}
 }

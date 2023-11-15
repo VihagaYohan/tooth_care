@@ -9,5 +9,5 @@ export default interface IAppointment {
   appointmentDate: IAppointmentDates;
   appointmentFee: number;
   treatmentType?: TreatmentType[];
-  status: AppointmentStatus;
+  status: {id: number; status: AppointmentStatus};
 }

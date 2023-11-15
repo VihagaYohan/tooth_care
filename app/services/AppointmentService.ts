@@ -18,8 +18,10 @@ export const getAllAppointments = () => {
 // add new appointment
 export const addAppointment = (newItem: Appointment): boolean => {
   let store = new Store<Appointment>();
+  store.addItemToCollection(newItem);
+  return true;
   // check if doctor already have an appointment for selected time slot
-  let allAppointments = store.getList(CollectionTypes.Appointments);
+  /* let allAppointments = store.getList(CollectionTypes.Appointments);
   let exsitingAppointment = allAppointments.filter((item: any, index) => {
     return (
       item.doctor.id === newItem.doctor.id &&
@@ -32,7 +34,7 @@ export const addAppointment = (newItem: Appointment): boolean => {
     return true;
   } else {
     return false;
-  }
+  } */
 };
 
 // update appointment
