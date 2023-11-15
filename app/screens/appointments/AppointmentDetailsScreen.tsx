@@ -1,41 +1,16 @@
 import React, {Component, useState, useEffect} from 'react';
 import {StyleSheet, ScrollView, View} from 'react-native';
-import {Dropdown, MultiSelect} from 'react-native-element-dropdown';
-import CheckBox from '@react-native-community/checkbox';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 
 // components
-import {UIContainer, UIButton, UITextView, UITextField} from '../../components';
-
-// constants
-import {STYLES, COLORS} from '../../constants';
-
-// navigation
-import {Routes} from '../../navigation';
-
-// pre-defined data
-import {Physicians} from '../../data/physicians';
-import {Patients} from '../../data/patients';
-import {AppointmentSlots} from '../../data/appointment_dates';
-import AppointmentStatusList from '../../data/appointment_status';
-import {Treatments} from '../../data/treatments';
+import {UIContainer, UIButton, UITextField} from '../../components';
 
 // utils
 import {normalizeSize, showAlert} from '../../utils/helpers';
 
 // models
 import Appointment from '../../domain/entities/Appointments';
-import {Patient} from '../../domain/entities';
-import IPhysician from '../../domain/models/IPhysician';
-import AppointmentDates from '../../domain/entities/AppointmentDates';
-import {Treatment} from '../../domain/enums/Enum';
-
-// services
-import {
-  addAppointment,
-  getAllAppointments,
-} from '../../services/AppointmentService';
 
 const AppointmentDetails = ({
   navigation,
@@ -48,27 +23,9 @@ const AppointmentDetails = ({
   console.log(item);
 
   const [isFocus, setIsFocus] = useState(false);
-  const [doctor, setDoctor] = useState<IPhysician>();
-  const [patient, setPatient] = useState<Patient>();
-  const [appointmentDate, setAppointmentDate] = useState<AppointmentDates>();
-  const [status, setStatus] = useState();
-  const [treatment, setTreatment] = useState<Treatment[]>([]);
-  const [registration, setRegistration] = useState<boolean>();
   const [serviceCharge, setServiceCharge] = useState<number>(0);
 
-  // data source
-  const physicians = Physicians;
-  const patients = Patients;
-  const slots = AppointmentSlots;
-  const statusList = AppointmentStatusList;
-  const treatmentList = Treatments;
-
   useEffect(() => {
-    setDoctor(item.doctor);
-    setPatient(item.patient);
-    setAppointmentDate(item.appointmentDate);
-    setTreatment(item.treatmentType);
-    setRegistration(item.appointmentFee.length > 0 ? true : false);
     let total: number = 0;
     item.treatmentType.map((item: any) => {
       total = total + item.price;
