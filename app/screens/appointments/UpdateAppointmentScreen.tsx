@@ -80,7 +80,7 @@ const AppointmentDetails = ({
 
   // handle update appointment
   const handleUpdateAppointment = () => {
-    let validate: boolean = true; //handleValidation();
+    let validate: boolean = handleValidation();
     if (validate === true) {
       let treatments: ITreatmentType[] = [];
       treatment.map((item: number) => {
@@ -112,7 +112,8 @@ const AppointmentDetails = ({
       doctor === undefined ||
       patient === undefined ||
       appointmentDate === undefined ||
-      status === undefined
+      status === undefined ||
+      treatment.length == 0
     ) {
       showAlert('Please check fields');
       return false;
