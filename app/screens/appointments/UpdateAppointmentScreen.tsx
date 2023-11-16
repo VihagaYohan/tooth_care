@@ -297,7 +297,11 @@ const AppointmentDetails = ({
 
         <UIButton
           label="Generate Invoice"
-          onClick={() => handleUpdateAppointment()}
+          onClick={() =>
+            navigation.navigate(Routes.payments.invoice, {
+              appointmentId: item.appointmentId,
+            })
+          }
           buttonContainerStyle={styles.buttonContainer}
         />
       </ScrollView>

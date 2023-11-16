@@ -20,7 +20,7 @@ const Routes = {
     newTreatment: 'NEW_TREATMENT_TYPE',
   },
   payments: {
-    paymentList: 'PAYMENT_LIST',
+    invoice: 'INVOICE',
   },
 };
 

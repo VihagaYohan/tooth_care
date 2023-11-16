@@ -14,3 +14,6 @@ export {default as PhysiciansDetailsScreen} from './physicians/PhysicianDetailsS
 // treatment types
 export {default as TreatmentTypesListScreen} from './treatments/TreatmentListScreen';
 export {default as NewTreatmentScreen} from './treatments/NewTreatmentTypeScreen';
+
+// payment
+export {default as InvoiceScreen} from './payments/InvoiceScreen';

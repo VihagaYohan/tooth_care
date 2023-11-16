@@ -10,6 +10,7 @@ import {
   AppointmentDetailsScreen,
   NewPatient,
   UpdateAppointmentScreen,
+  InvoiceScreen,
 } from '../screens';
 
 // components
@@ -96,7 +97,6 @@ const AppNavigator = () => {
           ),
         }}
       />
-
       <STACK.Screen
         name={Routes.appointmnets.updateAppointment}
         component={UpdateAppointmentScreen}
@@ -104,6 +104,15 @@ const AppNavigator = () => {
           headerTitle: props => (
             <UIHeader title="Update Appointment" {...props} />
           ),
+        }}
+      />
+
+      {/* payment */}
+      <STACK.Screen
+        name={Routes.payments.invoice}
+        component={InvoiceScreen}
+        options={{
+          headerTitle: props => <UIHeader title="Invoice" {...props} />,
         }}
       />
     </STACK.Navigator>

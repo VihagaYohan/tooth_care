@@ -10,7 +10,7 @@ import {Patients} from '../data/patients';
 import Appointments from '../data/appointments';
 
 // models
-import {Patient, Physician, TreatmentType, app} from '../domain/entities';
+import {Patient, Physician, TreatmentType} from '../domain/entities';
 import Appointment from '../domain/entities/Appointments';
 
 export default class Store<T> {

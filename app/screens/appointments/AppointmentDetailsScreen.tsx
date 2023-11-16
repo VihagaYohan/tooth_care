@@ -49,7 +49,7 @@ const AppointmentDetails = ({
   // render UI
   return (
     <UIContainer>
-      <ScrollView showsHorizontalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <UITextField
           label="Patient name"
           value={item.patient.getFullName()}
