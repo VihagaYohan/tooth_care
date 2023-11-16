@@ -12,6 +12,7 @@ import {normalizeSize, showAlert} from '../../utils/helpers';
 // models
 import Appointment from '../../domain/entities/Appointments';
 import {Routes} from '../../navigation';
+import {Treatment} from '../../domain/enums/Enum';
 
 const AppointmentDetails = ({
   navigation,
@@ -27,11 +28,15 @@ const AppointmentDetails = ({
   const [serviceCharge, setServiceCharge] = useState<number>(0);
 
   useEffect(() => {
-    let total: number = 0;
-    item.treatmentType.map((item: any) => {
-      total = total + item.price;
-    });
-    setServiceCharge(total + 1000);
+    if (item.treatmentType !== null) {
+      let total: number = 0;
+      item.treatmentType.map(
+        (item: {id: number; type: Treatment; price: number}) => {
+          total = total + item.price;
+        },
+      );
+      setServiceCharge(total + 1000);
+    }
   }, []);
 
   // handle update appointment
@@ -65,21 +70,25 @@ const AppointmentDetails = ({
 
         <UITextField
           label="Appointment status"
-          value={item.status}
+          value={item.status.status}
           type="field"
         />
 
-        <UITextField
-          label="Treatment types"
-          value={item.treatmentType}
-          type="tag"
-        />
+        {item.treatmentType !== null && (
+          <React.Fragment>
+            <UITextField
+              label="Treatment types"
+              value={item.treatmentType}
+              type="tag"
+            />
 
-        <UITextField
-          label="Total service charge (+ Rs. 1000.00 registration fee)"
-          value={`Rs.${serviceCharge.toFixed(2)}`}
-          type="field"
-        />
+            <UITextField
+              label="Total service charge (+ Rs. 1000.00 registration fee)"
+              value={`Rs.${serviceCharge.toFixed(2)}`}
+              type="field"
+            />
+          </React.Fragment>
+        )}
 
         <UIButton
           label="Update Appointment"
