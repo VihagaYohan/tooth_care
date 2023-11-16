@@ -145,7 +145,7 @@ const AppointmnetsScreen = ({
         <View style={styles.searchContainer}>
           <UITextInput
             placeholder="Enter appointment ID"
-            placeholderTextColor={COLORS.white}
+            placeholderTextColor={COLORS.grey.grey500}
             onChangeText={value => setSearchText(value)}
           />
 

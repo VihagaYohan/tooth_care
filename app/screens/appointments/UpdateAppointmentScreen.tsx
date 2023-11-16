@@ -302,7 +302,8 @@ const AppointmentDetails = ({
               appointmentId: item.appointmentId,
             })
           }
-          buttonContainerStyle={styles.buttonContainer}
+          buttonContainerStyle={styles.generateButtonContainer}
+          buttonTextStyle={styles.generateButtonText}
         />
       </ScrollView>
     </UIContainer>
@@ -362,6 +363,14 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: normalizeSize(30),
+    backgroundColor: COLORS.primaryColor,
+  },
+  generateButtonContainer: {
+    marginTop: normalizeSize(30),
+    backgroundColor: COLORS.secondaryColor,
+  },
+  generateButtonText: {
+    color: COLORS.primaryColor,
   },
 });
 

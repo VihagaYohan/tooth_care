@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.blue.blue800,
+    backgroundColor: COLORS.primaryColor,
     paddingVertical: 18 * DIMENSION.FONT_SCALE,
   },
   buttonTextStyle: {

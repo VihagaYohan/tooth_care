@@ -29,7 +29,7 @@ const AppNavigator = () => {
     <STACK.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: COLORS.backgroundColor,
+          backgroundColor: COLORS.primaryColor,
         },
         headerTintColor: COLORS.white,
         headerTitleStyle: {

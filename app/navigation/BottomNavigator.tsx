@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Routes} from './index';
 
 // constants
-import {ICONS} from '../constants';
+import {COLORS, ICONS} from '../constants';
 
 // screens
 import {
@@ -25,6 +25,7 @@ const Navigator = () => {
       initialRouteName={Routes.appointmnets.appointmentsList}
       screenOptions={{
         headerShown: false,
+        tabBarActiveTintColor: COLORS.primaryColor,
       }}>
       <TAB.Screen
         name={Routes.appointmnets.appointmentsList}

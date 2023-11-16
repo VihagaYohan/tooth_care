@@ -49,7 +49,8 @@ const InvoiceScreen = ({
     appointment?.treatmentType.map((item: TreatmentType) => {
       serviceCharge = serviceCharge + item.price;
     });
-    setTotal(serviceCharge);
+    // add appointment register fee to total service charge and save state
+    setTotal(serviceCharge + 1000);
   };
 
   return (

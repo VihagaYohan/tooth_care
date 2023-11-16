@@ -27,7 +27,10 @@ const UITextField = (props: propTypes) => {
           {props.value.map((item: any) => {
             return (
               <View style={styles.tagContainer}>
-                <UITextView text={item.type} textStyle={{color: 'black'}} />
+                <UITextView
+                  text={item.type}
+                  textStyle={{color: COLORS.white}}
+                />
               </View>
             );
           })}
@@ -47,9 +50,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   tagContainer: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     borderWidth: 1,
-    borderColor: COLORS.grey.grey400,
+    borderColor: COLORS.primaryColor,
+    backgroundColor: COLORS.primaryColor,
     borderRadius: 100,
     marginRight: 10,
   },

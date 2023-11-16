@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     paddingHorizontal: DIMENSION.PADDING / 2,
-    backgroundColor: COLORS.backgroundColor,
-    color: COLORS.grey.grey200,
+    backgroundColor: COLORS.white,
+    color: COLORS.grey.grey900,
     paddingVertical: 10,
     borderWidth: 1,
     borderColor: COLORS.grey.grey200,

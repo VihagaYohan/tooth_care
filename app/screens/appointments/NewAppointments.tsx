@@ -179,7 +179,7 @@ const NewAppointmentScreen = ({
             label="Create a new patient"
             onClick={() => navigation.navigate(Routes.patients.newPatient)}
             textStyle={{
-              color: COLORS.blue.blue800,
+              color: COLORS.primaryColor,
               fontSize: 16,
             }}
           />
