@@ -30,6 +30,7 @@ import {Patient} from '../../domain/entities';
 import IPhysician from '../../domain/models/IPhysician';
 import AppointmentDates from '../../domain/entities/AppointmentDates';
 import {Treatment} from '../../domain/enums/Enum';
+import ITreatmentType from '../../domain/models/ITreatment';
 
 // services
 import {
@@ -45,7 +46,6 @@ const AppointmentDetails = ({
   navigation: StackNavigationProp<any, any>;
   route: RouteProp<any, any>;
 }) => {
-  åå;
   const {item} = route.params;
 
   const [isFocus, setIsFocus] = useState(false);
@@ -53,9 +53,12 @@ const AppointmentDetails = ({
   const [patient, setPatient] = useState<Patient>();
   const [appointmentDate, setAppointmentDate] = useState<AppointmentDates>();
   const [status, setStatus] = useState();
-  const [treatment, setTreatment] = useState<Treatment[]>([]);
+  const [treatment, setTreatment] = useState<number[]>([]);
   const [registration, setRegistration] = useState<boolean>(true);
   const [serviceCharge, setServiceCharge] = useState<number>(0);
+  const [selectedTreatment, setSelectedTreatment] = useState<ITreatmentType[]>(
+    [],
+  );
 
   // data source
   const physicians = Physicians;
@@ -77,15 +80,23 @@ const AppointmentDetails = ({
 
   // handle update appointment
   const handleUpdateAppointment = () => {
-    let validate = handleValidation();
+    let validate: boolean = true; //handleValidation();
     if (validate === true) {
+      let treatments: ITreatmentType[] = [];
+      treatment.map((item: number) => {
+        const treatmentItem: ITreatmentType = Treatments[item - 1];
+        treatments.push(treatmentItem);
+      });
+
+      setSelectedTreatment(treatments);
+
       let appointment = new Appointment(
         item.appointmentId,
         patient,
         doctor,
         appointmentDate,
         registration === true ? 1000 : 0,
-        treatment,
+        treatments,
         status,
       );
 
@@ -116,14 +127,11 @@ const AppointmentDetails = ({
     treatment.map((element: any, index) => {
       let treatmentItem = treatmentList[element - 1];
       let price = (treatmentItem as any).price;
-      //console.log(treatmentItem, element);
-
       total = total + price;
     });
 
     if (registration === true) {
       total = total + 1000; // add registration fee to total
-      console.log(registration);
     }
 
     setServiceCharge(total);
@@ -154,7 +162,6 @@ const AppointmentDetails = ({
           onChange={(item: any) => {
             delete item._index;
             setDoctor(item);
-            console.log('selected doctor => ', item);
             setIsFocus(false);
           }}
         />
