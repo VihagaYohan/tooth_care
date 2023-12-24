@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   head: {height: 60, backgroundColor: '#f1f8ff'},
-  text: {margin: 6},
+  text: {margin: 6, color: COLORS.black},
   dataWrapper: {},
   row: {height: 100, backgroundColor: '#E7E6E1'},
   viewButtonStyle: {

@@ -1,6 +1,7 @@
 import IPhysician from '../domain/models/IPhysician';
 import {Physician} from '../domain/entities';
 import {AppointmentDates} from './appointment_dates';
+import {Gender} from '../domain/enums/Enum';
 
 export const Physicians: IPhysician[] = [
   new Physician(
@@ -9,6 +10,7 @@ export const Physicians: IPhysician[] = [
     'John',
     'Doe',
     56,
+    Gender.Male,
     '930399282',
     AppointmentDates,
     true,
@@ -19,6 +21,7 @@ export const Physicians: IPhysician[] = [
     'Susan',
     'Doe',
     47,
+    Gender.Feamel,
     '7499348783',
     AppointmentDates,
     true,

@@ -76,13 +76,6 @@ const NewAppointmentScreen = ({
   const handleSaveAppointment = () => {
     let validate = handleValidation();
     if (validate) {
-      appointmentData['appointmentId'] = list.length + 1;
-      appointmentData['doctor'] = doctor;
-      appointmentData['patient'] = patient;
-      appointmentData['appointmentDate'] = appointmentDate;
-      appointmentData['appointmentFee'] = 1000;
-      appointmentData['status'] = status;
-
       let appointment = new Appointment(
         list.length + 1,
         patient,
@@ -105,13 +98,12 @@ const NewAppointmentScreen = ({
   // handle validation
   const handleValidation = (): boolean => {
     if (
-      appointmentData === undefined ||
-      appointmentData.doctor === undefined ||
-      appointmentData.patient === undefined ||
-      appointmentData.appointmentDate === undefined ||
-      appointmentData.status === undefined
+      doctor === undefined ||
+      patient === undefined ||
+      appointmentDate === undefined ||
+      status === false
     ) {
-      showAlert('Please check fields');
+      showAlert('Please check the fields');
       return false;
     } else {
       return true;
@@ -141,6 +133,7 @@ const NewAppointmentScreen = ({
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(item: any) => {
+            console.log(item);
             delete item._index;
             setDoctor(item);
             setIsFocus(false);
