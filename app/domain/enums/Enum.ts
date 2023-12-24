@@ -42,5 +42,5 @@ export enum AppointmentStatus {
 
 export enum Gender {
   Male = 'Male',
-  Feamel = 'Feamel',
+  Feamel = 'Female',
 }

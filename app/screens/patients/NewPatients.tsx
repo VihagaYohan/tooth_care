@@ -25,6 +25,15 @@ import {showAlert} from '../../utils/helpers';
 // navigation
 import {Routes} from '../../navigation';
 
+const titles = [
+  {label: 'Mr', value: 'Mr'},
+  {
+    label: 'Mrs',
+    value: 'Mrs',
+  },
+  {label: 'Miss', value: 'Miss'},
+];
+
 const NewPatient = ({
   navigation,
   route,
@@ -40,17 +49,18 @@ const NewPatient = ({
   const [telephone, setTelephone] = useState<string>();
   const [age, setAge] = useState<string>();
   const [gender, setGender] = useState();
+  const [title, setTitle] = useState<String>();
 
   let list = getAllPatients();
 
   // handle add new patient
   const handleSave = () => {
     let validate = handleValidation();
-    if (!validate) {
+    if (validate === true) {
       addNewPatient(
         new Patient(
           list.length + 1,
-          'Mr',
+          title,
           firstName,
           lastName,
           age,
@@ -69,12 +79,13 @@ const NewPatient = ({
 
   // handle validation
   const handleValidation = (): boolean => {
+    console.log(firstName, lastName, address, telephone, age, gender);
     if (
       firstName === undefined ||
-      lastName ||
-      address ||
-      telephone ||
-      age ||
+      lastName === undefined ||
+      address === undefined ||
+      telephone === undefined ||
+      age === undefined ||
       gender === undefined
     ) {
       showAlert('Please check fields');
@@ -87,33 +98,60 @@ const NewPatient = ({
   return (
     <UIContainer>
       <ScrollView showsHorizontalScrollIndicator={false}>
+        <Dropdown
+          style={[
+            styles.dropdown,
+            isFocus && {borderColor: COLORS.blue.blue800},
+          ]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={titles}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select title' : '...'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(item: any) => {
+            delete item._index;
+            setTitle(item.value);
+            setIsFocus(false);
+          }}
+        />
         <View style={[styles.row, STYLES.flexRow]}>
           <UITextInput
             placeholder="First name"
-            placeholderTextColor={COLORS.white}
+            placeholderTextColor={COLORS.grey.grey500}
             onChangeText={value => setFirstName(value)}
           />
           <UITextInput
             placeholder="Last name"
-            placeholderTextColor={COLORS.white}
+            placeholderTextColor={COLORS.grey.grey500}
             onChangeText={value => setLastName(value)}
           />
         </View>
 
         <UITextInput
           placeholder="Address"
-          placeholderTextColor={COLORS.white}
+          placeholderTextColor={COLORS.grey.grey500}
           onChangeText={value => setAddress(value)}
         />
         <UITextInput
           placeholder="Telephone"
-          placeholderTextColor={COLORS.white}
+          placeholderTextColor={COLORS.grey.grey500}
           onChangeText={value => setTelephone(value)}
+          keyboardType="number-pad"
         />
         <UITextInput
           placeholder="Age"
-          placeholderTextColor={COLORS.white}
+          placeholderTextColor={COLORS.grey.grey500}
           onChangeText={value => setAge(value)}
+          keyboardType="number-pad"
         />
 
         <Dropdown
