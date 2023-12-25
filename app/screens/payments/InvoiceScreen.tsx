@@ -34,6 +34,10 @@ const InvoiceScreen = ({
     console.log(appointment);
   }, []);
 
+  useEffect(() => {
+    calcualteTotal();
+  }, [total]);
+
   // fetch appointment
   const fetchAppointment = () => {
     let result = getAppointmentById(appointmentId);
